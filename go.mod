@@ -1,3 +1,4 @@
+// +heroku goVersion go1.17
 module golangapi
 
 go 1.17
