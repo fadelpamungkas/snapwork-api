@@ -15,12 +15,12 @@ func main() {
 
 	routes.UserRoute(app)
 
-	//Heroku automatically assigns a port our web server. If it
-	//fails we instruct it to use port 3000
+	//Heroku automatically assigns a port our web server. If it   //fails we instruct it to use port 5000
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = ":3000"
 	}
 
 	app.Listen(port)
+
 }
