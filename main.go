@@ -3,6 +3,7 @@ package main
 import (
 	"golangapi/configs"
 	"golangapi/routes"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -14,5 +15,12 @@ func main() {
 
 	routes.UserRoute(app)
 
-	app.Listen(":3000")
+	//Heroku automatically assigns a port our web server. If it
+	//fails we instruct it to use port 3000
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+
+	app.Listen(port)
 }
