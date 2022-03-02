@@ -3,8 +3,8 @@ package controllers
 import (
 	"context"
 	"golangapi/configs"
-	"golangapi/models"
-	"golangapi/responses"
+	"golangapi/models/entities"
+	"golangapi/models/responses"
 	"net/http"
 	"time"
 
@@ -20,7 +20,7 @@ var validate = validator.New()
 
 func CreateUser(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	var user models.User
+	var user entities.User
 	defer cancel()
 
 	//validate the request body
@@ -45,11 +45,11 @@ func CreateUser(c *fiber.Ctx) error {
 		})
 	}
 
-	newUser := models.User{
-		Id:    primitive.NewObjectID(),
-		Name:  user.Name,
-		Email: user.Email,
-		Title: user.Title,
+	newUser := entities.User{
+		Id:       primitive.NewObjectID(),
+		Name:     user.Name,
+		Email:    user.Email,
+		Password: user.Password,
 	}
 
 	result, err := userCollection.InsertOne(ctx, newUser)
@@ -76,7 +76,7 @@ func CreateUser(c *fiber.Ctx) error {
 func GetSingleUser(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	userId := c.Params("userId")
-	var user models.User
+	var user entities.User
 	defer cancel()
 
 	objId, _ := primitive.ObjectIDFromHex(userId)
@@ -105,7 +105,7 @@ func GetSingleUser(c *fiber.Ctx) error {
 func UpdateUser(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	userId := c.Params("userId")
-	var user models.User
+	var user entities.User
 	defer cancel()
 
 	objId, _ := primitive.ObjectIDFromHex(userId)
@@ -122,9 +122,9 @@ func UpdateUser(c *fiber.Ctx) error {
 	}
 
 	update := bson.M{
-		"name":  user.Name,
-		"email": user.Email,
-		"title": user.Title,
+		"name":     user.Name,
+		"email":    user.Email,
+		"password": user.Password,
 	}
 
 	result, err := userCollection.UpdateOne(ctx, bson.M{"id": objId}, bson.M{"$set": update})
@@ -140,7 +140,7 @@ func UpdateUser(c *fiber.Ctx) error {
 	}
 
 	//get updated user details
-	var updatedUser models.User
+	var updatedUser entities.User
 	if result.MatchedCount == 1 {
 		err := userCollection.FindOne(ctx, bson.M{"id": objId}).Decode(&updatedUser)
 
@@ -203,7 +203,7 @@ func DeleteUser(c *fiber.Ctx) error {
 
 func GetAllUsers(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	var users []models.User
+	var users []entities.User
 	defer cancel()
 
 	results, err := userCollection.Find(ctx, bson.M{})
@@ -221,7 +221,7 @@ func GetAllUsers(c *fiber.Ctx) error {
 	//reading from db in an optimal way would
 	defer results.Close(ctx)
 	for results.Next(ctx) {
-		var singleUser models.User
+		var singleUser entities.User
 		if err = results.Decode(&singleUser); err != nil {
 			return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
 				Status:  http.StatusInternalServerError,
