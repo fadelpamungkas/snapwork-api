@@ -5,6 +5,7 @@ import (
 	"golangapi/models/entities"
 	"golangapi/models/requests"
 	"golangapi/models/responses"
+	"golangapi/utils"
 	"net/http"
 	"time"
 
@@ -15,6 +16,10 @@ import (
 
 func Login(c *fiber.Ctx) error {
 	loginRequest := new(requests.LoginRequest)
+
+	var user entities.User
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 
 	if err := c.BodyParser(loginRequest); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(responses.UserResponse{
@@ -37,23 +42,34 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	var user entities.User
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
 	err := userCollection.FindOne(ctx, bson.M{"email": loginRequest.Email}).Decode(&user)
 
 	if err != nil {
-		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
-			Status:  http.StatusInternalServerError,
-			Message: "Error getting user",
+		return c.Status(http.StatusUnauthorized).JSON(responses.UserResponse{
+			Status:  http.StatusUnauthorized,
+			Message: "Wrong Credential",
 			Data: &fiber.Map{
 				"data": err.Error(),
 			},
 		})
 	}
 
+	// validating password
+	errPass := utils.CheckHashPassword(loginRequest.Password, user.Password)
+
+	if errPass != nil {
+		return c.Status(http.StatusUnauthorized).JSON(responses.UserResponse{
+			Status:  http.StatusUnauthorized,
+			Message: "Wrong Credential",
+			Data: &fiber.Map{
+				"data": errPass.Error(),
+			},
+		})
+	}
+
 	return c.JSON(fiber.Map{
-		"token": "secret",
+		"token":   "secret",
+		"request": loginRequest,
+		"user":    user,
 	})
 }

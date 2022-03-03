@@ -5,6 +5,7 @@ import (
 	"golangapi/configs"
 	"golangapi/models/entities"
 	"golangapi/models/responses"
+	"golangapi/utils"
 	"net/http"
 	"time"
 
@@ -45,11 +46,23 @@ func CreateUser(c *fiber.Ctx) error {
 		})
 	}
 
+	hashPassword, err := utils.HashPassword(user.Password)
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
+			Status:  http.StatusInternalServerError,
+			Message: "Error hashing password",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+
 	newUser := entities.User{
 		Id:       primitive.NewObjectID(),
 		Name:     user.Name,
 		Email:    user.Email,
-		Password: user.Password,
+		Password: hashPassword,
 	}
 
 	result, err := userCollection.InsertOne(ctx, newUser)
@@ -121,10 +134,22 @@ func UpdateUser(c *fiber.Ctx) error {
 		})
 	}
 
+	hashPassword, errHash := utils.HashPassword(user.Password)
+
+	if errHash != nil {
+		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
+			Status:  http.StatusInternalServerError,
+			Message: "Error hashing password",
+			Data: &fiber.Map{
+				"data": errHash.Error(),
+			},
+		})
+	}
+
 	update := bson.M{
 		"name":     user.Name,
 		"email":    user.Email,
-		"password": user.Password,
+		"password": hashPassword,
 	}
 
 	result, err := userCollection.UpdateOne(ctx, bson.M{"id": objId}, bson.M{"$set": update})
