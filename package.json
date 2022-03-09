@@ -1,0 +1,19 @@
+{
+  "name": "golangapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.go",
+  "scripts": {
+    "x": "nodemon --exec go run main.go"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fadelpamungkas/snapwork-api.git"
+  },
+  "author": "fadel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fadelpamungkas/snapwork-api/issues"
+  },
+  "homepage": "https://github.com/fadelpamungkas/snapwork-api#readme"
+}

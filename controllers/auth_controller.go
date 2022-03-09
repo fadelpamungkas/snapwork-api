@@ -74,6 +74,7 @@ func Login(c *fiber.Ctx) error {
 	claims["name"] = user.Name
 	claims["email"] = user.Email
 	claims["password"] = user.Password
+	claims["role"] = "user"
 	claims["exp"] = time.Now().Add(time.Minute * 2).Unix()
 
 	token, errGenerate := utils.GenerateToken(&claims)
