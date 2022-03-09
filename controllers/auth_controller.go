@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
@@ -67,9 +68,27 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
+	// generate jwt token
+	claims := jwt.MapClaims{}
+	claims["id"] = user.Id.Hex()
+	claims["name"] = user.Name
+	claims["email"] = user.Email
+	claims["password"] = user.Password
+	claims["exp"] = time.Now().Add(time.Minute * 2).Unix()
+
+	token, errGenerate := utils.GenerateToken(&claims)
+
+	if errGenerate != nil {
+		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
+			Status:  http.StatusInternalServerError,
+			Message: "Error generating token",
+			Data: &fiber.Map{
+				"data": errGenerate.Error(),
+			},
+		})
+	}
+
 	return c.JSON(fiber.Map{
-		"token":   "secret",
-		"request": loginRequest,
-		"user":    user,
+		"token": token,
 	})
 }
