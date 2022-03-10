@@ -33,3 +33,17 @@ func VerifyToken(tokenString string) (*jwt.Token, error) {
 
 	return token, nil
 }
+
+func DecodeToken(tokenString string) (jwt.MapClaims, error) {
+	token, err := VerifyToken(tokenString)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return claims, nil
+	}
+
+	return nil, fmt.Errorf("Invalid token")
+}

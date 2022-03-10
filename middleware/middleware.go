@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"golangapi/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -15,12 +16,24 @@ func Auth(c *fiber.Ctx) error {
 		})
 	}
 
-	if _, err := utils.VerifyToken(token); err != nil {
+	claims, err := utils.DecodeToken(token)
+	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"message": "Unauthenticated token",
 			"error":   err.Error(),
 		})
 	}
+
+	// role := claims["role"].(string)
+
+	// if role != "admin" {
+	// 	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+	// 		"message": "Permission Denied",
+	// 	})
+	// }
+
+	fmt.Println("authUser", claims)
+	c.Locals("authUser", claims)
 
 	return c.Next()
 

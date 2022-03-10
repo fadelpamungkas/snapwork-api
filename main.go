@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"golangapi/configs"
 	"golangapi/routes"
 	"os"
@@ -22,5 +23,6 @@ func main() {
 	}
 
 	app.Listen(":" + port)
+	fmt.Println("Server started on port " + port)
 
 }

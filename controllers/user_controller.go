@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"golangapi/configs"
 	"golangapi/models/entities"
 	"golangapi/models/responses"
@@ -259,11 +260,15 @@ func GetAllUsers(c *fiber.Ctx) error {
 		users = append(users, singleUser)
 	}
 
+	authUser := c.Locals("authUser")
+
+	fmt.Println(authUser)
+
 	return c.Status(http.StatusOK).JSON(responses.UserResponse{
 		Status:  http.StatusOK,
 		Message: "Users retrieved successfully",
 		Data: &fiber.Map{
-			"data": users,
+			"data": authUser,
 		},
 	})
 }

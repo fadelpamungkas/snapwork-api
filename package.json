@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.go",
   "scripts": {
-    "x": "nodemon --exec go run main.go"
+    "x": "nodemon --exec go run . ext go"
   },
   "repository": {
     "type": "git",
