@@ -9,7 +9,10 @@ import (
 )
 
 func UserRoute(app *fiber.App) {
-	app.Static("/public", configs.ProjectRootPath+"/public/assets")
+	app.Static("/public", configs.ProjectRootPath+"/public/assets", fiber.Static{
+		Browse:   true,
+		Compress: false,
+	})
 
 	app.Get("/api/users", middleware.Auth, controllers.GetAllUsers)
 	app.Get("/api/user/:userId", controllers.GetSingleUser)
