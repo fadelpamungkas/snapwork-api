@@ -1,12 +1,23 @@
 package configs
 
+// import (
+// 	"path/filepath"
+// 	"runtime"
+// )
+
+// var (
+// 	_, b, _, _ = runtime.Caller(0)
+
+// 	ProjectRootPath = filepath.Join(filepath.Dir(b), "../")
+// )
 import (
+	"path"
 	"path/filepath"
 	"runtime"
 )
 
-var (
-	_, b, _, _ = runtime.Caller(0)
-
-	ProjectRootPath = filepath.Join(filepath.Dir(b), "../")
-)
+func RootDir() string {
+	_, b, _, _ := runtime.Caller(0)
+	d := path.Join(path.Dir(b))
+	return filepath.Dir(d)
+}

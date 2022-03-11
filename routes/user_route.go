@@ -9,7 +9,7 @@ import (
 )
 
 func UserRoute(app *fiber.App) {
-	app.Static("/public", configs.ProjectRootPath+"/public/assets", fiber.Static{
+	app.Static("/public", configs.RootDir()+"/public/assets", fiber.Static{
 		Browse:   true,
 		Compress: false,
 	})
