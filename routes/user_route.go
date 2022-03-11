@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"golangapi/configs"
 	"golangapi/controllers"
 	"golangapi/middleware"
 
@@ -8,6 +9,8 @@ import (
 )
 
 func UserRoute(app *fiber.App) {
+	app.Static("/public", configs.ProjectRootPath+"/public/assets")
+
 	app.Get("/api/users", middleware.Auth, controllers.GetAllUsers)
 	app.Get("/api/user/:userId", controllers.GetSingleUser)
 	app.Post("/api/users", controllers.CreateUser)
