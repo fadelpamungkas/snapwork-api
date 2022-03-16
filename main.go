@@ -22,7 +22,7 @@ func main() {
 		port = "3000"
 	}
 
-	app.Listen(":" + port)
 	fmt.Println("Server started on port " + port)
+	app.Listen(":" + port)
 
 }

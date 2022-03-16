@@ -9,7 +9,7 @@ import (
 )
 
 func UserRoute(app *fiber.App) {
-	app.Static("/public", configs.RootDir()+"/public/assets", fiber.Static{
+	app.Static("/public", configs.BasePath+"/public/assets", fiber.Static{
 		Browse:   true,
 		Compress: false,
 	})
@@ -20,5 +20,5 @@ func UserRoute(app *fiber.App) {
 	app.Put("/api/user/:userId", controllers.UpdateUser)
 	app.Delete("/api/user/:userId", controllers.DeleteUser)
 
-	app.Get("/login", controllers.Login)
+	app.Post("/login", controllers.Login)
 }
