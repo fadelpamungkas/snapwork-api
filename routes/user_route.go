@@ -14,11 +14,10 @@ func UserRoute(app *fiber.App) {
 		Compress: false,
 	})
 
-	app.Get("/api/users", middleware.Auth, controllers.GetAllUsers)
-	app.Get("/api/user/:userId", controllers.GetSingleUser)
-	app.Post("/api/users", controllers.CreateUser)
-	app.Put("/api/user/:userId", controllers.UpdateUser)
-	app.Delete("/api/user/:userId", controllers.DeleteUser)
-
-	app.Post("/login", controllers.Login)
+	app.Get("/api/users", middleware.Auth, controllers.GetAllUsers) // Get all users
+	app.Get("/api/user/:userId", controllers.GetSingleUser)         // Get a single user
+	app.Post("/api/users", controllers.CreateUser)                  // Create a new user
+	app.Put("/api/user/:userId", controllers.UpdateUser)            // Update an existing user
+	app.Delete("/api/user/:userId", controllers.DeleteUser)         // Delete user
+	app.Post("/login", controllers.Login)                           // login authentication
 }
