@@ -46,17 +46,9 @@ func CreatePost(c *fiber.Ctx) error {
 		})
 	}
 
-	newPost := entities.Post{
-		Id:       primitive.NewObjectID(),
-		Title:    post.Title,
-		Content:  post.Content,
-		Category: post.Category,
-		Price:    post.Price,
-		// AuthorId: post.AuthorId,
-		AuthorName: post.AuthorName,
-	}
+	post.Id = primitive.NewObjectID()
 
-	result, err := postCollection.InsertOne(ctx, newPost)
+	result, err := postCollection.InsertOne(ctx, post)
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
@@ -125,15 +117,7 @@ func UpdatePost(c *fiber.Ctx) error {
 		})
 	}
 
-	update := bson.M{
-		"title":      post.Title,
-		"content":    post.Content,
-		"category":   post.Category,
-		"price":      post.Price,
-		"authorName": post.AuthorName,
-	}
-
-	result, err := postCollection.UpdateOne(ctx, bson.M{"id": objId}, bson.M{"$set": update})
+	result, err := postCollection.UpdateOne(ctx, bson.M{"id": objId}, bson.M{"$set": post})
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{

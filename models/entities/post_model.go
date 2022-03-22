@@ -6,12 +6,21 @@ import (
 )
 
 type Post struct {
-	Id       primitive.ObjectID `json:"_id,omitempty"`
-	Title    string             `json:"title,omitempty" validate:"required"`
-	Content  string             `json:"content,omitempty" validate:"required"`
-	Category string             `json:"category,omitempty" validate:"required"`
-	Price    float64            `json:"price,omitempty" validate:"required"`
-	// Photo      *fiber.Map         `json:"photo,omitempty" validate:"required"`
-	// AuthorId   primitive.ObjectID `json:"authorId,omitempty" validate:"required"`
-	AuthorName string `json:"authorName,omitempty" validate:"required"`
+	Id         primitive.ObjectID `json:"_id,omitempty"`
+	Title      string             `json:"title,omitempty" validate:"required"`
+	Content    string             `json:"content,omitempty" validate:"required"`
+	Category   string             `json:"category,omitempty" validate:"required"`
+	AuthorId   primitive.ObjectID `json:"authorId,omitempty" validate:"required"`
+	AuthorName string             `json:"authorName,omitempty" validate:"required"`
+	Tier       struct {
+		Silver   TierContent `json:"silver,omitempty" validate:"required"`
+		Gold     TierContent `json:"gold,omitempty" validate:"required"`
+		Platinum TierContent `json:"platinum,omitempty" validate:"required"`
+	} `json:"tier,omitempty" validate:"required"`
+}
+
+type TierContent struct {
+	Description string   `json:"description,omitempty" validate:"required"`
+	Price       float64  `json:"price,omitempty" validate:"required"`
+	Offer       []string `json:"offer,omitempty" validate:"required"`
 }
