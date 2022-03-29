@@ -7,9 +7,10 @@ import (
 )
 
 func PostRoute(app *fiber.App) {
-	app.Get("/api/posts", controllers.GetAllPosts)          // Get all posts
-	app.Get("/api/post/:postId", controllers.GetSinglePost) // Get a single post
-	app.Post("/api/posts", controllers.CreatePost)          // Create a new post
-	app.Put("/api/post/:postId", controllers.UpdatePost)    // Update an existing post
-	app.Delete("/api/post/:postId", controllers.DeletePost) // Delete post
+	app.Get("/api/posts", controllers.GetAllPosts)                    // Get all posts
+	app.Get("/api/posts/user/:userId", controllers.GetAllPostsByUser) // Get all posts by user id
+	app.Get("/api/post/:postId", controllers.GetSinglePost)           // Get a single post
+	app.Post("/api/posts", controllers.CreatePost)                    // Create a new post
+	app.Put("/api/post/:postId", controllers.UpdatePost)              // Update an existing post
+	app.Delete("/api/post/:postId", controllers.DeletePost)           // Delete post
 }

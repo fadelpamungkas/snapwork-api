@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"golangapi/configs"
 	"golangapi/models/entities"
 	"golangapi/models/responses"
@@ -239,4 +240,52 @@ func GetAllPosts(c *fiber.Ctx) error {
 			"data": posts,
 		},
 	})
+
+}
+
+func GetAllPostsByUser(c *fiber.Ctx) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	userId := c.Params("userId")
+	var posts []entities.Post
+	defer cancel()
+
+	authorId, _ := primitive.ObjectIDFromHex(userId)
+
+	results, err := postCollection.Find(ctx, bson.M{"authorid": authorId})
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
+			Status:  http.StatusInternalServerError,
+			Message: "Error getting posts",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+
+	//reading from db in an optimal way would
+	defer results.Close(ctx)
+	for results.Next(ctx) {
+		var singlePost entities.Post
+		if err = results.Decode(&singlePost); err != nil {
+			return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
+				Status:  http.StatusInternalServerError,
+				Message: "Error getting posts",
+				Data: &fiber.Map{
+					"data": err.Error(),
+				},
+			})
+		}
+		posts = append(posts, singlePost)
+		fmt.Println(singlePost)
+	}
+
+	return c.Status(http.StatusOK).JSON(responses.UserResponse{
+		Status:  http.StatusOK,
+		Message: "Posts retrieved successfully",
+		Data: &fiber.Map{
+			"data": posts,
+		},
+	})
+
 }

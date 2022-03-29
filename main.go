@@ -24,7 +24,7 @@ func main() {
 	// If it fails we instruct it to use port 000
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = "8080"
 	}
 
 	fmt.Println("Server started on port " + port)
