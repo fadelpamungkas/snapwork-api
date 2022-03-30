@@ -126,6 +126,7 @@ func UpdatePost(c *fiber.Ctx) error {
 	// 	"authorName": post.AuthorName,
 	// }
 
+	post.Id = objId
 	result, err := postCollection.UpdateOne(ctx, bson.M{"id": objId}, bson.M{"$set": post})
 
 	if err != nil {
