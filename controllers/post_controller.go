@@ -6,6 +6,8 @@ import (
 	"golangapi/configs"
 	"golangapi/models/entities"
 	"golangapi/models/responses"
+	"golangapi/utils"
+	"log"
 	"net/http"
 	"time"
 
@@ -48,6 +50,35 @@ func CreatePost(c *fiber.Ctx) error {
 	}
 
 	post.Id = primitive.NewObjectID()
+	log.Println(post.Id)
+	log.Println(post.Id.Hex())
+	log.Println(post.Id.String())
+
+	form, errForm := c.MultipartForm()
+	if errForm != nil {
+		log.Println("errForm: ", errForm)
+	}
+	metadata, err := utils.MultipleFileHandler(form, post.Id.Hex())
+	if err != nil {
+		log.Println("err: ", err)
+	}
+
+	if metadata[0] == nil {
+		return c.Status(422).JSON(fiber.Map{
+			"message": "image is required.",
+		})
+	}
+
+	for i, _ := range metadata[0] {
+		newImage := &entities.Image{
+			Id:   primitive.NewObjectID(),
+			Name: metadata[0][i],
+			Url:  metadata[1][i],
+		}
+		post.Images = append(post.Images, *newImage)
+		log.Println("metadata[0][i]" + metadata[0][i])
+		log.Println("metadata[1][i]" + metadata[1][i])
+	}
 
 	result, err := postCollection.InsertOne(ctx, post)
 
