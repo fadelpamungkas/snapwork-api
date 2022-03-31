@@ -42,10 +42,7 @@ func MultipleFileHandler(form *multipart.Form, postId string) ([2][]string, erro
 		if filename != "" && url != "" {
 			metadata[0] = append(metadata[0], filename)
 			metadata[1] = append(metadata[1], url)
-
 		}
-		log.Println("metadata: ", metadata)
-
 	}
 
 	return metadata, nil

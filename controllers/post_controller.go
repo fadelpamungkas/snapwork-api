@@ -50,9 +50,6 @@ func CreatePost(c *fiber.Ctx) error {
 	}
 
 	post.Id = primitive.NewObjectID()
-	log.Println(post.Id)
-	log.Println(post.Id.Hex())
-	log.Println(post.Id.String())
 
 	form, errForm := c.MultipartForm()
 	if errForm != nil {
@@ -76,8 +73,6 @@ func CreatePost(c *fiber.Ctx) error {
 			Url:  metadata[1][i],
 		}
 		post.Images = append(post.Images, *newImage)
-		log.Println("metadata[0][i]" + metadata[0][i])
-		log.Println("metadata[1][i]" + metadata[1][i])
 	}
 
 	result, err := postCollection.InsertOne(ctx, post)
