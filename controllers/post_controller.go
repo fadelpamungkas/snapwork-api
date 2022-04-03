@@ -66,7 +66,7 @@ func CreatePost(c *fiber.Ctx) error {
 		})
 	}
 
-	for i, _ := range metadata[0] {
+	for i := range metadata[0] {
 		newImage := &entities.Image{
 			Id:   primitive.NewObjectID(),
 			Name: metadata[0][i],
@@ -262,7 +262,7 @@ func GetAllPosts(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(responses.UserResponse{
 		Status:  http.StatusOK,
-		Message: "Posts retrieved successfully",
+		Message: "Posts retrieved ",
 		Data: &fiber.Map{
 			"data": posts,
 		},

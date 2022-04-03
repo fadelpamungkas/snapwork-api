@@ -11,7 +11,15 @@ import (
 )
 
 func main() {
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		// ErrorHandler: func(c *fiber.Ctx, err error) error {
+		// 	fmt.Println(err)
+		// 	return c.Status(500).SendString("Internal Server Error")
+		// },
+		Prefork:      true,
+		ServerHeader: "Fiber",
+		AppName:      "Snapwork-API",
+	})
 
 	app.Use(cors.New())
 

@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_CONNSTRING=mongodb+srv://fadel:fadel@cluster1.apc8j.mongodb.net/golangapi?retryWrites=true&w=majority

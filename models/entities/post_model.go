@@ -28,6 +28,6 @@ type TierContent struct {
 
 type Image struct {
 	Id   primitive.ObjectID `json:"_id,omitempty"`
-	Name string             `json:"name,omitempty" validate:"required"`
+	Name string             `json:"name,omitempty"`
 	Url  string             `json:"url,omitempty"`
 }
