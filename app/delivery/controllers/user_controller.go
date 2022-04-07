@@ -69,6 +69,28 @@ func (uc *UserController) GetAllUsers(c *fiber.Ctx) error {
 	return c.Status(data.Status).JSON(authUser)
 }
 
+func (uc *UserController) GetAuthUser(c *fiber.Ctx) error {
+	authUser := c.Locals("authUser")
+	if authUser == nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(models.UserResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error getting users",
+			Data: &fiber.Map{
+				"data": "",
+			},
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(
+		models.UserResponse{
+			Status:  fiber.StatusOK,
+			Message: "Successfully get user",
+			Data: &fiber.Map{
+				"data": authUser,
+			},
+		})
+}
+
 func (uc *UserController) GetOneUser(c *fiber.Ctx) error {
 	userId := c.Params("userId")
 	data, err := uc.usecase.GetOneUserUC(context.Background(), userId)

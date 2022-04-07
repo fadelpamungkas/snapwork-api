@@ -2,10 +2,8 @@ package controllers
 
 import (
 	"context"
-	"golangapi/models/entities"
-	"golangapi/models/requests"
-	"golangapi/models/responses"
-	"golangapi/utils"
+	"golangapi/app/models"
+	"golangapi/libs"
 	"net/http"
 	"time"
 
@@ -16,14 +14,14 @@ import (
 )
 
 func Login(c *fiber.Ctx) error {
-	loginRequest := new(requests.LoginRequest)
+	loginRequest := new(models.LoginRequest)
 
-	var user entities.User
+	var user models.UserEntity
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	if err := c.BodyParser(loginRequest); err != nil {
-		return c.Status(http.StatusBadRequest).JSON(responses.UserResponse{
+		return c.Status(http.StatusBadRequest).JSON(models.UserResponse{
 			Status:  http.StatusBadRequest,
 			Message: "Invalid request body",
 			Data: &fiber.Map{
@@ -34,7 +32,7 @@ func Login(c *fiber.Ctx) error {
 
 	validate := validator.New()
 	if validationErr := validate.Struct(loginRequest); validationErr != nil {
-		return c.Status(http.StatusBadRequest).JSON(responses.UserResponse{
+		return c.Status(http.StatusBadRequest).JSON(models.UserResponse{
 			Status:  http.StatusBadRequest,
 			Message: "Invalid request body",
 			Data: &fiber.Map{
@@ -46,7 +44,7 @@ func Login(c *fiber.Ctx) error {
 	err := userCollection.FindOne(ctx, bson.M{"email": loginRequest.Email}).Decode(&user)
 
 	if err != nil {
-		return c.Status(http.StatusUnauthorized).JSON(responses.UserResponse{
+		return c.Status(http.StatusUnauthorized).JSON(models.UserResponse{
 			Status:  http.StatusUnauthorized,
 			Message: "Wrong Credential",
 			Data: &fiber.Map{
@@ -56,10 +54,10 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	// validating password
-	errPass := utils.CheckHashPassword(loginRequest.Password, user.Password)
+	errPass := libs.CheckHashPassword(loginRequest.Password, user.Password)
 
 	if errPass != nil {
-		return c.Status(http.StatusUnauthorized).JSON(responses.UserResponse{
+		return c.Status(http.StatusUnauthorized).JSON(models.UserResponse{
 			Status:  http.StatusUnauthorized,
 			Message: "Wrong Credential",
 			Data: &fiber.Map{
@@ -77,10 +75,10 @@ func Login(c *fiber.Ctx) error {
 	claims["role"] = "user"
 	claims["exp"] = time.Now().Add(time.Minute * 2).Unix()
 
-	token, errGenerate := utils.GenerateToken(&claims)
+	token, errGenerate := libs.GenerateToken(&claims)
 
 	if errGenerate != nil {
-		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{
+		return c.Status(http.StatusInternalServerError).JSON(models.UserResponse{
 			Status:  http.StatusInternalServerError,
 			Message: "Error generating token",
 			Data: &fiber.Map{
@@ -89,7 +87,7 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.Status(http.StatusOK).JSON(responses.UserResponse{
+	return c.Status(http.StatusOK).JSON(models.UserResponse{
 		Status:  http.StatusOK,
 		Message: "Login Success",
 		Data: &fiber.Map{

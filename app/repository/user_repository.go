@@ -128,7 +128,7 @@ func (ur UserRepository) GetOne(ctx context.Context, id string) (res models.User
 		Status:  fiber.StatusOK,
 		Message: "Success get users",
 		Data: &fiber.Map{
-			"users": user,
+			"data": user,
 		},
 	}, err
 }
