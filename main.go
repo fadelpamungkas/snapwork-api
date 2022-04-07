@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
-	"golangapi/configs"
-	"golangapi/routes"
+	delivery "golangapi/app/delivery/api"
+	"golangapi/app/repository"
+	"golangapi/app/usecase"
+	"golangapi/libs"
+	"log"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,23 +19,37 @@ func main() {
 		// 	fmt.Println(err)
 		// 	return c.Status(500).SendString("Internal Server Error")
 		// },
-		Prefork:      true,
+		Prefork:      false,
 		ServerHeader: "Fiber",
 		AppName:      "Snapwork-API",
 	})
-
 	app.Use(cors.New())
 
-	configs.ConnectDB()
+	env, err := libs.Environment()
 
-	routes.UserRoute(app)
-	routes.PostRoute(app)
+	// Mongo
+	mongo, err := libs.Connect(env.Database)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	log.Println("Connected to MongoDB")
+
+	// User
+	userRepo := repository.NewUserRepository(mongo)
+	userUsecase := usecase.NewUserUsecase(userRepo)
+	delivery.UserRoute(app, userUsecase)
+
+	// Post
+	postRepo := repository.NewPostRepository(mongo)
+	postUsecase := usecase.NewPostUsecase(postRepo)
+	delivery.PostRoute(app, postUsecase)
 
 	// Heroku automatically assigns a port our web server.
 	// If it fails we instruct it to use port 000
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = fmt.Sprintf("%v", env.Port)
 	}
 
 	fmt.Println("Server started on port " + port)
