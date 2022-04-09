@@ -13,6 +13,7 @@ type (
 		Title      string             `json:"title,omitempty" validate:"required"`
 		Content    string             `json:"content,omitempty" validate:"required"`
 		Category   string             `json:"category,omitempty" validate:"required"`
+		Price      float64            `json:"price,omitempty" validate:"required"`
 		AuthorId   primitive.ObjectID `json:"authorId,omitempty" validate:"required"`
 		AuthorName string             `json:"authorName,omitempty" validate:"required"`
 		Images     []Image            `json:"image,omitempty"`

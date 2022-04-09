@@ -59,7 +59,7 @@ func (pr PostRepository) GetAll(ctx context.Context) (res models.PostResponse, e
 func (pr PostRepository) GetAllByUser(ctx context.Context, id string) (res models.PostResponse, err error) {
 
 	reqId, _ := primitive.ObjectIDFromHex(id)
-	results, err := pr.mongoDB.Collection("posts").Find(ctx, bson.M{"authorId": reqId})
+	results, err := pr.mongoDB.Collection("posts").Find(ctx, bson.M{"authorid": reqId})
 	if err != nil {
 		return models.PostResponse{
 			Status:  fiber.StatusInternalServerError,
