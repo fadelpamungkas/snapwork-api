@@ -4,6 +4,7 @@ import (
 	"context"
 	"golangapi/app/models"
 	"golangapi/libs"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
@@ -152,7 +153,12 @@ func (pr PostRepository) Insert(ctx context.Context, req models.PostRequest) (re
 func (pr PostRepository) Update(ctx context.Context, req models.PostRequest) (res int, err error) {
 	reqId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
 
-	if _, err = pr.mongoDB.Collection("posts").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": req}); err != nil {
+	if _, err = pr.mongoDB.Collection("posts").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
+		"title":    req.Title,
+		"content":  req.Content,
+		"category": req.Category,
+		"price":    req.Price,
+	}}); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
 
@@ -161,6 +167,8 @@ func (pr PostRepository) Update(ctx context.Context, req models.PostRequest) (re
 	if err := pr.mongoDB.Collection("posts").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedpost); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
+
+	log.Println(updatedpost)
 
 	return fiber.StatusOK, nil
 }
