@@ -16,7 +16,7 @@ type (
 		Price      float64            `json:"price,omitempty" validate:"required"`
 		AuthorId   primitive.ObjectID `json:"authorId,omitempty" validate:"required"`
 		AuthorName string             `json:"authorName,omitempty" validate:"required"`
-		Images     []Image            `json:"image,omitempty"`
+		Images     []Image            `json:"images,omitempty"`
 		// Tier       struct {
 		// 	Silver   TierContent `json:"silver,omitempty" validate:"required"`
 		// 	Gold     TierContent `json:"gold,omitempty" validate:"required"`
