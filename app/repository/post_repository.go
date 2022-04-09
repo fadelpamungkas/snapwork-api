@@ -168,7 +168,7 @@ func (pr PostRepository) Update(ctx context.Context, req models.PostRequest) (re
 func (pr PostRepository) Delete(ctx context.Context, id string) (res int, err error) {
 	reqId, _ := primitive.ObjectIDFromHex(id)
 
-	if _, err = pr.mongoDB.Collection("product").DeleteOne(ctx, bson.M{"id": reqId}); err != nil {
+	if _, err = pr.mongoDB.Collection("posts").DeleteOne(ctx, bson.M{"id": reqId}); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
 
