@@ -114,14 +114,13 @@ func (pr PostRepository) GetOne(ctx context.Context, id string) (res models.Post
 }
 
 func (pr PostRepository) Insert(ctx context.Context, req models.PostRequest) (res int, err error) {
-	var post models.PostEntity
-	post.Id = primitive.NewObjectID()
-
-	metadata, err := libs.MultipleFileHandler(req.Images, post.Id.Hex())
+	metadata, err := libs.MultipleFileHandler(req.Images, req.Id.Hex())
 
 	if metadata[0] == nil {
 		return fiber.StatusInternalServerError, err
 	}
+
+	images := []models.Image{}
 
 	for i := range metadata[0] {
 		newImage := &models.Image{
@@ -129,14 +128,25 @@ func (pr PostRepository) Insert(ctx context.Context, req models.PostRequest) (re
 			Name: metadata[0][i],
 			Url:  metadata[1][i],
 		}
-		post.Images = append(post.Images, *newImage)
+		images = append(images, *newImage)
 	}
 
-	if _, err := pr.mongoDB.Collection("posts").InsertOne(ctx, post); err != nil {
+	newPost := models.PostEntity{
+		Id:         primitive.NewObjectID(),
+		Title:      req.Title,
+		Content:    req.Content,
+		Category:   req.Category,
+		Price:      req.Price,
+		AuthorId:   req.AuthorId,
+		AuthorName: req.AuthorName,
+		Images:     images,
+	}
+
+	if _, err := pr.mongoDB.Collection("posts").InsertOne(ctx, newPost); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
 
-	return fiber.StatusOK, nil
+	return fiber.StatusCreated, nil
 }
 
 func (pr PostRepository) Update(ctx context.Context, req models.PostRequest) (res int, err error) {

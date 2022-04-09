@@ -38,7 +38,8 @@ type (
 		Title      string             `json:"title" validate:"required"`
 		Content    string             `json:"content" validate:"required"`
 		Category   string             `json:"category" validate:"required"`
-		AuthorId   string             `json:"authorId" validate:"required"`
+		Price      float64            `json:"price,omitempty" validate:"required"`
+		AuthorId   primitive.ObjectID `json:"authorId" validate:"required"`
 		AuthorName string             `json:"authorName" validate:"required"`
 		Images     *multipart.Form    `json:"images,omitempty"`
 	}
