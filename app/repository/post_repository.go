@@ -115,25 +115,27 @@ func (pr PostRepository) GetOne(ctx context.Context, id string) (res models.Post
 }
 
 func (pr PostRepository) Insert(ctx context.Context, req models.PostRequest) (res int, err error) {
-	metadata, err := libs.MultipleFileHandler(req.Images, req.Id.Hex())
+	postId := primitive.NewObjectID()
 
-	if metadata[0] == nil {
+	metadata, err := libs.MultipleFileHandler(req.Images, postId.Hex())
+
+	if metadata == nil {
 		return fiber.StatusInternalServerError, err
 	}
 
 	images := []models.Image{}
 
-	for i := range metadata[0] {
+	for i := range metadata {
 		newImage := &models.Image{
 			Id:   primitive.NewObjectID(),
-			Name: metadata[0][i],
-			Url:  metadata[1][i],
+			Name: metadata[i].Filename,
+			Url:  metadata[i].Url,
 		}
 		images = append(images, *newImage)
 	}
 
 	newPost := models.PostEntity{
-		Id:         primitive.NewObjectID(),
+		Id:         postId,
 		Title:      req.Title,
 		Content:    req.Content,
 		Category:   req.Category,

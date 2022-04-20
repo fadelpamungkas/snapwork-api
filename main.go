@@ -52,7 +52,6 @@ func main() {
 		port = fmt.Sprintf("%v", env.Port)
 	}
 
-	fmt.Println("Server started on port " + port)
-	app.Listen(":" + port)
-
+	log.Println("Server started on port " + port)
+	log.Fatal(app.Listen(":" + port))
 }

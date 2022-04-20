@@ -7,11 +7,15 @@ import (
 	"path/filepath"
 )
 
-func MultipleFileHandler(form *multipart.Form, postId string) ([2][]string, error) {
+type Metadata struct {
+	Filename string `json:"filename"`
+	Url      string `json:"url"`
+}
 
+func MultipleFileHandler(form *multipart.Form, postId string) ([]Metadata, error) {
 	files := form.File["images"]
 
-	var metadata [2][]string
+	var metadata []Metadata
 
 	for i, file := range files {
 		var filename string
@@ -39,8 +43,10 @@ func MultipleFileHandler(form *multipart.Form, postId string) ([2][]string, erro
 		}
 
 		if filename != "" && url != "" {
-			metadata[0] = append(metadata[0], filename)
-			metadata[1] = append(metadata[1], url)
+			metadata = append(metadata, Metadata{
+				Filename: filename,
+				Url:      url,
+			})
 		}
 	}
 
