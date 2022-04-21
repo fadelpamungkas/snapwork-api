@@ -17,16 +17,6 @@ type (
 		AuthorId   primitive.ObjectID `json:"authorId,omitempty" validate:"required"`
 		AuthorName string             `json:"authorName,omitempty" validate:"required"`
 		Images     []Image            `json:"images,omitempty"`
-		// Tier       struct {
-		// 	Silver   TierContent `json:"silver,omitempty" validate:"required"`
-		// 	Gold     TierContent `json:"gold,omitempty" validate:"required"`
-		// 	Platinum TierContent `json:"platinum,omitempty" validate:"required"`
-		// } `json:"tier,omitempty" validate:"required"`
-	}
-	TierContent struct {
-		Description string   `json:"description,omitempty" validate:"required"`
-		Price       float64  `json:"price,omitempty" validate:"required"`
-		Offer       []string `json:"offer,omitempty" validate:"required"`
 	}
 	Image struct {
 		Id   primitive.ObjectID `json:"_id,omitempty"`

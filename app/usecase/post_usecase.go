@@ -18,13 +18,13 @@ func NewPostUsecase(postRepo repository.PostRepositoryI) PostUsecaseI {
 	}
 }
 
-func (uc *PostUsecase) GetAllUC(ctx context.Context) (res models.PostResponse, err error) {
+func (uc *PostUsecase) GetAllUC(ctx context.Context, query models.Query) (res models.PostResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}
 
 	//get all data
-	list, err := uc.repo.GetAll(ctx)
+	list, err := uc.repo.GetAll(ctx, query)
 	if err != nil {
 		log.Println("failed to show data product with default log")
 		return list, err

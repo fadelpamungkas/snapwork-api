@@ -22,9 +22,14 @@ func NewPostRepository(mongo *mongo.Database) PostRepositoryI {
 	}
 }
 
-func (pr PostRepository) GetAll(ctx context.Context) (res models.PostResponse, err error) {
+func (pr PostRepository) GetAll(ctx context.Context, query models.Query) (res models.PostResponse, err error) {
+	var results *mongo.Cursor
 
-	results, err := pr.mongoDB.Collection("posts").Find(ctx, bson.M{})
+	if query.Title != "" {
+		results, err = pr.mongoDB.Collection("posts").Find(ctx, bson.M{"title": query.Title})
+	} else {
+		results, err = pr.mongoDB.Collection("posts").Find(ctx, bson.M{})
+	}
 	if err != nil {
 		return models.PostResponse{
 			Status:  fiber.StatusInternalServerError,

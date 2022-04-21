@@ -17,7 +17,7 @@ type (
 	}
 
 	PostRepositoryI interface {
-		GetAll(ctx context.Context) (res models.PostResponse, err error)
+		GetAll(ctx context.Context, query models.Query) (res models.PostResponse, err error)
 		GetAllByUser(ctx context.Context, id string) (res models.PostResponse, err error)
 		GetOne(ctx context.Context, id string) (res models.PostResponse, err error)
 		Insert(ctx context.Context, req models.PostRequest) (res int, err error)

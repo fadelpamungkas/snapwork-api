@@ -17,7 +17,7 @@ type (
 	}
 
 	PostUsecaseI interface {
-		GetAllUC(ctx context.Context) (res models.PostResponse, err error)
+		GetAllUC(ctx context.Context, query models.Query) (res models.PostResponse, err error)
 		GetAllByUserUC(ctx context.Context, id string) (res models.PostResponse, err error)
 		GetOneUC(ctx context.Context, id string) (res models.PostResponse, err error)
 		InsertUC(ctx context.Context, req models.PostRequest) (res int, err error)
