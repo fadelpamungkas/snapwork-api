@@ -4,7 +4,6 @@ import (
 	"context"
 	"golangapi/app/models"
 	"golangapi/app/usecase"
-	"log"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -23,13 +22,12 @@ func NewPostController(f *fiber.App, usecase usecase.PostUsecaseI) *PostControll
 }
 
 func (pc *PostController) GetAllPost(c *fiber.Ctx) error {
-	query := new(models.Query)
+	var query models.Query
 
 	// Queries are optional
-	c.QueryParser(query)
-	log.Println(*query)
+	c.QueryParser(&query)
 
-	data, err := pc.usecase.GetAllUC(context.Background(), *query)
+	data, err := pc.usecase.GetAllUC(context.Background(), query)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(models.PostResponse{
 			Status:  fiber.StatusInternalServerError,

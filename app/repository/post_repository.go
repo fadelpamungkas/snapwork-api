@@ -25,8 +25,26 @@ func NewPostRepository(mongo *mongo.Database) PostRepositoryI {
 func (pr PostRepository) GetAll(ctx context.Context, query models.Query) (res models.PostResponse, err error) {
 	var results *mongo.Cursor
 
-	if query.Title != "" {
-		results, err = pr.mongoDB.Collection("posts").Find(ctx, bson.M{"title": query.Title})
+	if query != (models.Query{}) {
+		var filter bson.D
+		if query.Title != "" && query.Category != "" {
+			filter = bson.D{
+				{"$and", bson.A{
+					bson.D{{"title", query.Title}},
+					bson.D{{"category", query.Category}},
+				}},
+			}
+		} else {
+			filter = bson.D{
+				{"$or", bson.A{
+					bson.D{{"title", query.Title}},
+					bson.D{{"category", query.Category}},
+				}},
+			}
+		}
+		results, err = pr.mongoDB.Collection("posts").Find(ctx, &filter)
+		// results, err = pr.mongoDB.Collection("posts").Find(ctx, bson.M{"title": query.Title})
+		// results, err = pr.mongoDB.Collection("posts").Find(ctx, bson.D{{"title", query.Title}}, options.Find().SetSort(bson.D{{"price", -1}}))
 	} else {
 		results, err = pr.mongoDB.Collection("posts").Find(ctx, bson.M{})
 	}
