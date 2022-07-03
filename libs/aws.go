@@ -13,7 +13,7 @@ import (
 
 const (
 	// S3BucketName is the name of the S3 bucket
-	S3BucketName = "snapworkupload"
+	S3BucketName = "snapworkfiles"
 	// S3Region is the region of the S3 bucket
 	S3Region = "ap-southeast-1"
 )
