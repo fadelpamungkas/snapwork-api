@@ -20,6 +20,7 @@ type (
 		Province      string             `json:"province,omitempty""`
 		City          string             `json:"city,omitempty""`
 		Address       string             `json:"address,omitempty""`
+		PostalCode    string             `json:"postalcode,omitempty"`
 		OfficerName   string             `json:"officername,omitempty""`
 		OfficerEmail  string             `json:"officeremail,omitempty""`
 		OfficerPhone  string             `json:"officerphone,omitempty""`
@@ -40,6 +41,7 @@ type (
 		Province      string             `json:"province,omitempty""`
 		City          string             `json:"city,omitempty""`
 		Address       string             `json:"address,omitempty""`
+		PostalCode    string             `json:"postalcode,omitempty"`
 		OfficerName   string             `json:"officername,omitempty""`
 		OfficerEmail  string             `json:"officeremail,omitempty""`
 		OfficerPhone  string             `json:"officerphone,omitempty""`

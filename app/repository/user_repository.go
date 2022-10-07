@@ -207,6 +207,7 @@ func (ur UserRepository) InsertCompany(ctx context.Context, req models.CompanyRe
 		Province:      req.Province,
 		City:          req.City,
 		Address:       req.Address,
+		PostalCode:    req.PostalCode,
 		OfficerName:   req.OfficerName,
 		OfficerEmail:  req.OfficerEmail,
 		OfficerPhone:  req.OfficerPhone,
