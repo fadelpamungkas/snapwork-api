@@ -8,6 +8,7 @@ import (
 type (
 	CompanyEntity struct {
 		Id            primitive.ObjectID `json:"_id,omitempty"`
+		UserId        string             `json:"user_id,omitempty"`
 		Status        string             `json:"status,omitempty"`
 		Name          string             `json:"name,omitempty"`
 		Email         string             `json:"email,omitempty"`
@@ -23,10 +24,11 @@ type (
 		OfficerEmail  string             `json:"officeremail,omitempty""`
 		OfficerPhone  string             `json:"officerphone,omitempty""`
 		OfficerMobile string             `json:"officermobile,omitempty""`
-		CreatedAt    string             `json:"created_at,omitempty""`
+		CreatedAt     string             `json:"created_at,omitempty""`
 	}
 	CompanyRequest struct {
 		Id            primitive.ObjectID `json:"_id,omitempty"`
+		UserId        string             `json:"user_id,omitempty"`
 		Status        string             `json:"status,omitempty"`
 		Name          string             `json:"name,omitempty"`
 		Email         string             `json:"email,omitempty"`
@@ -42,7 +44,7 @@ type (
 		OfficerEmail  string             `json:"officeremail,omitempty""`
 		OfficerPhone  string             `json:"officerphone,omitempty""`
 		OfficerMobile string             `json:"officermobile,omitempty""`
-		CreatedAt    string             `json:"created_at,omitempty""`
+		CreatedAt     string             `json:"created_at,omitempty""`
 	}
 	CompanyResponse struct {
 		Status  int        `json:"status"`

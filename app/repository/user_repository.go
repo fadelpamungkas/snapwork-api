@@ -195,6 +195,7 @@ func (ur UserRepository) InsertCompany(ctx context.Context, req models.CompanyRe
 
 	newCompany := models.CompanyEntity{
 		Id:            primitive.NewObjectID(),
+		UserId:        req.UserId,
 		Status:        "Pending",
 		Name:          req.Name,
 		Email:         req.Email,
