@@ -191,6 +191,7 @@ func (ur UserRepository) Delete(ctx context.Context, id string) (res int, err er
 }
 
 func (ur UserRepository) InsertCompany(ctx context.Context, req models.CompanyRequest) (res int, err error) {
+	dt := time.Now()
 
 	newCompany := models.CompanyEntity{
 		Id:            primitive.NewObjectID(),
@@ -209,6 +210,7 @@ func (ur UserRepository) InsertCompany(ctx context.Context, req models.CompanyRe
 		OfficerEmail:  req.OfficerEmail,
 		OfficerPhone:  req.OfficerPhone,
 		OfficerMobile: req.OfficerMobile,
+		CreatedAt:     dt.Format("01/02/2006"),
 	}
 
 	if _, err := ur.mongoDB.Collection("companydata").InsertOne(ctx, newCompany); err != nil {
@@ -252,4 +254,3 @@ func (ur UserRepository) GetAllCompanies(ctx context.Context) (res models.Compan
 		},
 	}, err
 }
-
