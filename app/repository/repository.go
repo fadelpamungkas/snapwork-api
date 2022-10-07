@@ -13,6 +13,9 @@ type (
 		Update(ctx context.Context, req models.UserRequest) (res int, err error)
 		Delete(ctx context.Context, id string) (res int, err error)
 
+		InsertCompany(ctx context.Context, req models.CompanyRequest) (res int, err error)
+		GetAllCompanies(ctx context.Context) (res models.CompanyResponse, err error)
+
 		Login(ctx context.Context, req models.LoginRequest) (res models.UserResponse, err error)
 	}
 

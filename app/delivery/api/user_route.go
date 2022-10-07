@@ -16,6 +16,8 @@ func UserRoute(app *fiber.App, u usecase.UserUsecaseI) {
 	api.Get("/users", middlewares.Auth, c.GetAllUsers)    // Get all users
 	api.Get("/authuser", middlewares.Auth, c.GetAuthUser) // Get auth user
 	api.Get("/user/:userId", c.GetOneUser)                // Get a single user
+	api.Get("/companies", c.GetAllCompanies)              // Get all companies
+	api.Post("/company", c.InsertCompany)                 // Get all companies
 	api.Post("/user", c.InsertUser)                       // Create a new user
 	api.Put("/user", c.UpdateUser)                        // Update an existing user
 	api.Delete("/user/:userId", c.DeleteUser)             // Delete user
