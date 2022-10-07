@@ -53,7 +53,7 @@ func (ur UserRepository) Login(ctx context.Context, req models.LoginRequest) (re
 	claims["name"] = user.Name
 	claims["email"] = user.Email
 	claims["password"] = user.Password
-	claims["role"] = "user"
+	claims["role"] = user.Role
 	claims["exp"] = time.Now().Add(time.Minute * 2).Unix()
 
 	token, errGenerate := libs.GenerateToken(&claims)
@@ -144,6 +144,7 @@ func (ur UserRepository) Insert(ctx context.Context, req models.UserRequest) (re
 		Name:     req.Name,
 		Email:    req.Email,
 		Password: hashPassword,
+		Role:     "user",
 	}
 
 	if _, err := ur.mongoDB.Collection("users").InsertOne(ctx, newUser); err != nil {
