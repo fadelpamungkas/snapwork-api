@@ -45,6 +45,11 @@ func main() {
 	postUsecase := usecase.NewPostUsecase(postRepo)
 	delivery.PostRoute(app, postUsecase)
 
+	// Post
+	transRepo := repository.NewTransactionRepository(mongo)
+	transUsecase := usecase.NewTransactionUsecase(transRepo)
+	delivery.TransactionRoute(app, transUsecase)
+
 	// Heroku automatically assigns a port our web server.
 	// If it fails we instruct it to use port 000
 	port := os.Getenv("PORT")

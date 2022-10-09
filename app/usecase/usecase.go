@@ -27,4 +27,9 @@ type (
 		UpdateUC(ctx context.Context, req models.PostRequest) (res int, err error)
 		DeleteUC(ctx context.Context, id string) (res int, err error)
 	}
+
+	TransactionUsecaseI interface {
+		InsertOrderUC(ctx context.Context, req models.OrderRequest) (res int, err error)
+		GetAllOrderUC(ctx context.Context) (res models.OrderResponse, err error)
+	}
 )

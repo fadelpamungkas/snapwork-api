@@ -102,6 +102,7 @@ func (uc *UserUsecase) DeleteUC(ctx context.Context, id string) (res int, err er
 
 	return res, nil
 }
+
 func (uc *UserUsecase) InsertCompanyUC(ctx context.Context, req models.CompanyRequest) (res int, err error) {
 	if ctx == nil {
 		ctx = context.Background()
