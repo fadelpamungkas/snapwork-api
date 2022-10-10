@@ -13,9 +13,6 @@ type (
 		UpdateUC(ctx context.Context, req models.UserRequest) (res int, err error)
 		DeleteUC(ctx context.Context, id string) (res int, err error)
 
-		InsertCompanyUC(ctx context.Context, req models.CompanyRequest) (res int, err error)
-		GetAllCompaniesUC(ctx context.Context) (res models.CompanyResponse, err error)
-
 		LoginUC(ctx context.Context, req models.LoginRequest) (res models.UserResponse, err error)
 	}
 
@@ -31,5 +28,12 @@ type (
 	TransactionUsecaseI interface {
 		InsertOrderUC(ctx context.Context, req models.OrderRequest) (res int, err error)
 		GetAllOrderUC(ctx context.Context) (res models.OrderResponse, err error)
+	}
+
+	CompanyUsecaseI interface {
+		InsertCompanyUC(ctx context.Context, req models.CompanyRequest) (res int, err error)
+		GetAllCompaniesUC(ctx context.Context) (res models.CompanyResponse, err error)
+		InsertJobUC(ctx context.Context, req models.CompanyJobRequest) (res int, err error)
+		GetAllJobsInCompanyUC(ctx context.Context, id string) (res models.CompanyJobResponse, err error)
 	}
 )

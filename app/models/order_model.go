@@ -8,7 +8,7 @@ import (
 type (
 	OrderEntity struct {
 		Id        primitive.ObjectID `json:"_id,omitempty"`
-		UserId    string             `json:"userid,omitempty"`
+		UserId    primitive.ObjectID `json:"userid,omitempty"`
 		Status    string             `json:"status,omitempty"`
 		Name      string             `json:"name,omitempty"`
 		Method    string             `json:"method,omitempty"`
@@ -18,7 +18,7 @@ type (
 	}
 	OrderRequest struct {
 		Id        primitive.ObjectID `json:"_id,omitempty"`
-		UserId    string             `json:"userid,omitempty"`
+		UserId    primitive.ObjectID `json:"userid,omitempty"`
 		Status    string             `json:"status,omitempty"`
 		Name      string             `json:"name,omitempty"`
 		Method    string             `json:"method,omitempty"`

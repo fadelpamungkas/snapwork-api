@@ -102,33 +102,3 @@ func (uc *UserUsecase) DeleteUC(ctx context.Context, id string) (res int, err er
 
 	return res, nil
 }
-
-func (uc *UserUsecase) InsertCompanyUC(ctx context.Context, req models.CompanyRequest) (res int, err error) {
-	if ctx == nil {
-		ctx = context.Background()
-	}
-
-	//insert data
-	res, err = uc.repo.InsertCompany(ctx, req)
-	if err != nil {
-		return res, err
-	}
-
-	return res, nil
-}
-
-
-func (uc *UserUsecase) GetAllCompaniesUC(ctx context.Context) (res models.CompanyResponse, err error) {
-	if ctx == nil {
-		ctx = context.Background()
-	}
-
-	//get all data
-	list, err := uc.repo.GetAllCompanies(ctx)
-	if err != nil {
-		log.Println("failed to show data product with default log")
-		return list, err
-	}
-
-	return list, err
-}
