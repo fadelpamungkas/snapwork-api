@@ -100,30 +100,13 @@ func (uc *CompanyController) InsertJob(c *fiber.Ctx) error {
 	return c.Status(data).JSON(data)
 }
 
-// func (uc *CompanyController) GetAllJobsInCompany(c *fiber.Ctx) error {
-//
-// 	data, err := uc.usecase.GetAllJobsInCompanyUC(context.Background())
-// 	if err != nil {
-// 		return c.Status(fiber.StatusInternalServerError).JSON(models.CompanyJobResponse{
-// 			Status:  fiber.StatusInternalServerError,
-// 			Message: "Error getting all company jobs",
-// 			Data: &fiber.Map{
-// 				"data": err.Error(),
-// 			},
-// 		})
-// 	}
-//
-// 	// authUser := c.Locals("authUser")
-// 	return c.Status(data.Status).JSON(data)
-// }
-
-func (uc *CompanyController) GetAllJobsInCompany(c *fiber.Ctx) error {
+func (uc *CompanyController) GetCompany(c *fiber.Ctx) error {
 	companyId := c.Params("companyId")
-	data, err := uc.usecase.GetAllJobsInCompanyUC(context.Background(), companyId)
+	data, err := uc.usecase.GetCompany(context.Background(), companyId)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(models.CompanyJobResponse{
+		return c.Status(fiber.StatusInternalServerError).JSON(models.CompanyResponse{
 			Status:  fiber.StatusInternalServerError,
-			Message: "Error getting all company jobs",
+			Message: "Error getting all company",
 			Data: &fiber.Map{
 				"data": err.Error(),
 			},

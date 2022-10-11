@@ -62,28 +62,13 @@ func (uc *CompanyUsecase) InsertJobUC(ctx context.Context, req models.CompanyJob
 	return res, nil
 }
 
-// func (uc *CompanyUsecase) GetAllJobsInCompanyUC(ctx context.Context) (res models.CompanyJobResponse, err error) {
-// 	if ctx == nil {
-// 		ctx = context.Background()
-// 	}
-//
-// 	//get all data
-// 	list, err := uc.repo.GetAllJobsInCompany(ctx)
-// 	if err != nil {
-// 		log.Println("failed to show data product with default log")
-// 		return list, err
-// 	}
-//
-// 	return list, err
-// }
-
-func (uc *CompanyUsecase) GetAllJobsInCompanyUC(ctx context.Context, id string) (res models.CompanyJobResponse, err error) {
+func (uc *CompanyUsecase) GetCompany(ctx context.Context, id string) (res models.CompanyResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}
 
 	//get data by id
-	data, err := uc.repo.GetAllJobsInCompany(ctx, id)
+	data, err := uc.repo.GetCompany(ctx, id)
 	if err != nil {
 		log.Println("failed to show data product with default log")
 		return data, err

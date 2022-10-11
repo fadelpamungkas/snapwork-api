@@ -127,6 +127,7 @@ func (ur CompanyRepository) InsertJob(ctx context.Context, req models.CompanyJob
 	}}); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
+
 	//get updated post details
 	var updatedCompanyJob models.CompanyEntity
 	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedCompanyJob); err != nil {
@@ -138,59 +139,23 @@ func (ur CompanyRepository) InsertJob(ctx context.Context, req models.CompanyJob
 	return fiber.StatusOK, nil
 }
 
-//
-// func (ur CompanyRepository) GetAllJobsInCompany(ctx context.Context) (res models.CompanyJobResponse, err error) {
-//
-// 	results, err := ur.mongoDB.Collection("companyjobs").Find(ctx, bson.M{})
-// 	if err != nil {
-// 		return models.CompanyJobResponse{
-// 			Status:  fiber.StatusInternalServerError,
-// 			Message: "Error getting company job",
-// 			Data:    nil,
-// 		}, err
-// 	}
-// 	defer results.Close(ctx)
-//
-// 	var jobs []models.CompanyJobEntity
-// 	for results.Next(ctx) {
-// 		var row models.CompanyJobEntity
-// 		err := results.Decode(&row)
-// 		if err != nil {
-// 			return models.CompanyJobResponse{
-// 				Status:  fiber.StatusInternalServerError,
-// 				Message: "Error getting company jobs",
-// 				Data:    nil,
-// 			}, err
-// 		}
-// 		jobs = append(jobs, row)
-// 	}
-//
-// 	return models.CompanyJobResponse{
-// 		Status:  fiber.StatusOK,
-// 		Message: "Success get company jobs",
-// 		Data: &fiber.Map{
-// 			"data": jobs,
-// 		},
-// 	}, err
-// }
-
-func (ur CompanyRepository) GetAllJobsInCompany(ctx context.Context, id string) (res models.CompanyJobResponse, err error) {
-	var jobs models.CompanyJobEntity
+func (ur CompanyRepository) GetCompany(ctx context.Context, id string) (res models.CompanyResponse, err error) {
+	var company models.CompanyEntity
 
 	reqId, _ := primitive.ObjectIDFromHex(id)
-	if err := ur.mongoDB.Collection("companyjobs").FindOne(ctx, bson.M{"userid": reqId}).Decode(&jobs); err != nil {
-		return models.CompanyJobResponse{
+	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": reqId}).Decode(&company); err != nil {
+		return models.CompanyResponse{
 			Status:  fiber.StatusInternalServerError,
-			Message: "Error getting company jobs",
+			Message: "Error getting company",
 			Data:    nil,
 		}, err
 	}
 
-	return models.CompanyJobResponse{
+	return models.CompanyResponse{
 		Status:  fiber.StatusOK,
-		Message: "Success get company jobs",
+		Message: "Success get company",
 		Data: &fiber.Map{
-			"data": jobs,
+			"data": company,
 		},
 	}, err
 }
