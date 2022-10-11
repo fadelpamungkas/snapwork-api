@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"golangapi/app/models"
+	"log"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -91,9 +92,18 @@ func (ur CompanyRepository) GetAllCompanies(ctx context.Context) (res models.Com
 func (ur CompanyRepository) InsertJob(ctx context.Context, req models.CompanyJobRequest) (res int, err error) {
 	dt := time.Now()
 
+	reqId, _ := primitive.ObjectIDFromHex(req.CompanyId.Hex())
+
+	jobs := []models.CompanyJobEntity{}
+
+	//get updated post details
+	var currentData models.CompanyEntity
+	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": reqId}).Decode(&currentData); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
 	newJob := models.CompanyJobEntity{
 		Id:          primitive.NewObjectID(),
-		UserId:      req.UserId,
 		Name:        req.Name,
 		Kind:        req.Kind,
 		Type:        req.Type,
@@ -110,12 +120,24 @@ func (ur CompanyRepository) InsertJob(ctx context.Context, req models.CompanyJob
 		UpdatedAt:   dt.Format("01/02/2006 15:04:05"),
 	}
 
-	if _, err := ur.mongoDB.Collection("companyjobs").InsertOne(ctx, newJob); err != nil {
+	jobs = append(currentData.CompanyJob, newJob)
+
+	if _, err = ur.mongoDB.Collection("companydata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
+		"companyjob": jobs,
+	}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+	//get updated post details
+	var updatedCompanyJob models.CompanyEntity
+	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedCompanyJob); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
 
+	log.Println(updatedCompanyJob)
+
 	return fiber.StatusOK, nil
 }
+
 //
 // func (ur CompanyRepository) GetAllJobsInCompany(ctx context.Context) (res models.CompanyJobResponse, err error) {
 //
@@ -172,4 +194,3 @@ func (ur CompanyRepository) GetAllJobsInCompany(ctx context.Context, id string) 
 		},
 	}, err
 }
-
