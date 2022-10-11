@@ -159,3 +159,41 @@ func (ur CompanyRepository) GetCompany(ctx context.Context, id string) (res mode
 		},
 	}, err
 }
+
+func (ur CompanyRepository) GetJobCompany(ctx context.Context, companyId string, jobId string) (res models.CompanyJobResponse, err error) {
+	var company models.CompanyEntity
+	var job *models.CompanyJobEntity
+
+	reqCompanyId, _ := primitive.ObjectIDFromHex(companyId)
+	reqJobId, _ := primitive.ObjectIDFromHex(jobId)
+	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": reqCompanyId}).Decode(&company); err != nil {
+		return models.CompanyJobResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error getting company",
+			Data:    nil,
+		}, err
+	}
+
+	for i := range company.CompanyJob {
+		if company.CompanyJob[i].Id == reqJobId {
+			job = &company.CompanyJob[i]
+		}
+	}
+
+	if job == nil {
+		return models.CompanyJobResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error getting job",
+			Data:    nil,
+		}, err
+
+	}
+
+	return models.CompanyJobResponse{
+		Status:  fiber.StatusOK,
+		Message: "Success get job",
+		Data: &fiber.Map{
+			"data": job,
+		},
+	}, err
+}
