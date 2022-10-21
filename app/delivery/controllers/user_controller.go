@@ -46,7 +46,13 @@ func (uc *UserController) Login(c *fiber.Ctx) error {
 
 	data, err := uc.usecase.LoginUC(context.Background(), user)
 	if err != nil {
-		return err
+		return c.Status(fiber.StatusNotFound).JSON(models.UserResponse{
+			Status:  fiber.StatusNotFound,
+			Message: "Account Not Found",
+			Data: &fiber.Map{
+				"data": err,
+			},
+		})
 	}
 
 	return c.Status(data.Status).JSON(data)
