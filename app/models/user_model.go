@@ -20,6 +20,10 @@ type (
 		Password string             `json:"password" validate:"required"`
 		Role     string             `json:"role,omitempty""`
 	}
+	UserRoleRequest struct {
+		Id   primitive.ObjectID `json:"_id,omitempty"`
+		Role string             `json:"role,omitempty""`
+	}
 	UserResponse struct {
 		Status  int        `json:"status"`
 		Message string     `json:"message"`

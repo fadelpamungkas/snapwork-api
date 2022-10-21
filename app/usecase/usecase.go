@@ -10,7 +10,7 @@ type (
 		GetAllUC(ctx context.Context) (res models.UserResponse, err error)
 		GetOneUserUC(ctx context.Context, id string) (res models.UserResponse, err error)
 		InsertUC(ctx context.Context, req models.UserRequest) (res int, err error)
-		UpdateUC(ctx context.Context, req models.UserRequest) (res int, err error)
+		UpdateRoleUC(ctx context.Context, req models.UserRoleRequest) (res int, err error)
 		DeleteUC(ctx context.Context, id string) (res int, err error)
 
 		LoginUC(ctx context.Context, req models.LoginRequest) (res models.UserResponse, err error)

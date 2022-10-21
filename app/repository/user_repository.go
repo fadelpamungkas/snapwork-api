@@ -154,17 +154,14 @@ func (ur UserRepository) Insert(ctx context.Context, req models.UserRequest) (re
 	return fiber.StatusOK, nil
 }
 
-func (ur UserRepository) Update(ctx context.Context, req models.UserRequest) (res int, err error) {
+func (ur UserRepository) UpdateRole(ctx context.Context, req models.UserRoleRequest) (res int, err error) {
 	reqId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
-	hashPassword, err := libs.HashPassword(req.Password)
 	if err != nil {
 		return fiber.StatusInternalServerError, err
 	}
 
 	updateData := bson.M{
-		"name":     req.Name,
-		"email":    req.Email,
-		"password": hashPassword,
+		"role": req.Role,
 	}
 
 	if _, err = ur.mongoDB.Collection("users").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": updateData}); err != nil {

@@ -76,13 +76,13 @@ func (uc *UserUsecase) InsertUC(ctx context.Context, req models.UserRequest) (re
 	return res, nil
 }
 
-func (uc *UserUsecase) UpdateUC(ctx context.Context, req models.UserRequest) (res int, err error) {
+func (uc *UserUsecase) UpdateRoleUC(ctx context.Context, req models.UserRoleRequest) (res int, err error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}
 
 	//update data
-	res, err = uc.repo.Update(ctx, req)
+	res, err = uc.repo.UpdateRole(ctx, req)
 	if err != nil {
 		return res, err
 	}

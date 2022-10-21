@@ -138,14 +138,21 @@ func (uc *UserController) InsertUser(c *fiber.Ctx) error {
 	}
 	data, err := uc.usecase.InsertUC(context.Background(), req)
 	if err != nil {
-		return err
+		return c.Status(data).JSON(models.UserResponse{
+			Status:  data,
+			Message: "Error Insert",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+
 	}
 
 	return c.Status(data).JSON(data)
 }
 
-func (uc *UserController) UpdateUser(c *fiber.Ctx) error {
-	var req models.UserRequest
+func (uc *UserController) UpdateRole(c *fiber.Ctx) error {
+	var req models.UserRoleRequest
 	//validate the request body
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(models.UserResponse{
@@ -156,9 +163,16 @@ func (uc *UserController) UpdateUser(c *fiber.Ctx) error {
 			},
 		})
 	}
-	data, err := uc.usecase.UpdateUC(context.Background(), req)
+	data, err := uc.usecase.UpdateRoleUC(context.Background(), req)
 	if err != nil {
-		return err
+		return c.Status(data).JSON(models.UserResponse{
+			Status:  data,
+			Message: "Error Update",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+
 	}
 
 	return c.Status(data).JSON(data)
