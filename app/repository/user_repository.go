@@ -144,7 +144,7 @@ func (ur UserRepository) Insert(ctx context.Context, req models.UserRequest) (re
 		Name:     req.Name,
 		Email:    req.Email,
 		Password: hashPassword,
-		Role:     "user",
+		Role:     "none",
 	}
 
 	if _, err := ur.mongoDB.Collection("users").InsertOne(ctx, newUser); err != nil {
