@@ -77,6 +77,21 @@ func (uc *CompanyUsecase) GetCompany(ctx context.Context, id string) (res models
 	return data, err
 }
 
+func (uc *CompanyUsecase) GetCompanyByUserId(ctx context.Context, id string) (res models.CompanyResponse, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//get data by id
+	data, err := uc.repo.GetCompanyByUserId(ctx, id)
+	if err != nil {
+		log.Println("failed to show data product with default log")
+		return data, err
+	}
+
+	return data, err
+}
+
 func (uc *CompanyUsecase) GetJobCompany(ctx context.Context, companyId string, jobId string) (res models.CompanyJobResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()

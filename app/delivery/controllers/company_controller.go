@@ -116,6 +116,22 @@ func (uc *CompanyController) GetCompany(c *fiber.Ctx) error {
 	return c.Status(data.Status).JSON(data)
 }
 
+func (uc *CompanyController) GetCompanyByUserId(c *fiber.Ctx) error {
+	userId := c.Params("userId")
+	data, err := uc.usecase.GetCompanyByUserId(context.Background(), userId)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(models.CompanyResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error getting company by user id",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+
+	return c.Status(data.Status).JSON(data)
+}
+
 func (uc *CompanyController) GetJobCompany(c *fiber.Ctx) error {
 	companyId := c.Params("companyId")
 	jobId := c.Params("jobId")

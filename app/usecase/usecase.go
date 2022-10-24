@@ -35,6 +35,7 @@ type (
 		GetAllCompaniesUC(ctx context.Context) (res models.CompanyResponse, err error)
 		InsertJobUC(ctx context.Context, req models.CompanyJobRequest) (res int, err error)
 		GetCompany(ctx context.Context, id string) (res models.CompanyResponse, err error)
+		GetCompanyByUserId(ctx context.Context, id string) (res models.CompanyResponse, err error)
 		GetJobCompany(ctx context.Context, companyid string, jobId string) (res models.CompanyJobResponse, err error)
 	}
 )

@@ -160,6 +160,27 @@ func (ur CompanyRepository) GetCompany(ctx context.Context, id string) (res mode
 	}, err
 }
 
+func (ur CompanyRepository) GetCompanyByUserId(ctx context.Context, id string) (res models.CompanyResponse, err error) {
+	var company models.CompanyEntity
+
+	reqId, _ := primitive.ObjectIDFromHex(id)
+	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"userid": reqId}).Decode(&company); err != nil {
+		return models.CompanyResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error getting company by userid",
+			Data:    nil,
+		}, err
+	}
+
+	return models.CompanyResponse{
+		Status:  fiber.StatusOK,
+		Message: "Success get company",
+		Data: &fiber.Map{
+			"data": company,
+		},
+	}, err
+}
+
 func (ur CompanyRepository) GetJobCompany(ctx context.Context, companyId string, jobId string) (res models.CompanyJobResponse, err error) {
 	var company models.CompanyEntity
 	var job *models.CompanyJobEntity
