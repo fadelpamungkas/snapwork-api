@@ -42,4 +42,12 @@ type (
 		GetCompanyByUserId(ctx context.Context, id string) (res models.CompanyResponse, err error)
 		GetJobCompany(ctx context.Context, companyId string, jobId string) (res models.CompanyJobResponse, err error)
 	}
+
+	NewsRepositoryI interface {
+		InsertNews(ctx context.Context, req models.NewsRequest) (res int, err error)
+		GetAllNews(ctx context.Context) (res models.NewsResponse, err error)
+		GetOneNews(ctx context.Context, id string) (res models.NewsResponse, err error)
+		UpdateNews(ctx context.Context, req models.NewsRequest) (res int, err error)
+		DeleteNews(ctx context.Context, id string) (res int, err error)
+	}
 )

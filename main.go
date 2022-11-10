@@ -55,6 +55,11 @@ func main() {
 	companyUsecase := usecase.NewCompanyUsecase(companyRepo)
 	delivery.CompanyRoute(app, companyUsecase)
 
+	// News
+	newsRepo := repository.NewNewsRepository(mongo)
+	newsUsecase := usecase.NewNewsUsecase(newsRepo)
+	delivery.NewsRoute(app, newsUsecase)
+
 	// Heroku automatically assigns a port our web server.
 	// If it fails we instruct it to use port 000
 	port := os.Getenv("PORT")

@@ -42,4 +42,12 @@ type (
 		GetCompanyByUserId(ctx context.Context, id string) (res models.CompanyResponse, err error)
 		GetJobCompany(ctx context.Context, companyid string, jobId string) (res models.CompanyJobResponse, err error)
 	}
+
+	NewsUsecaseI interface {
+		InsertNewsUC(ctx context.Context, req models.NewsRequest) (res int, err error)
+		GetAllNewsUC(ctx context.Context) (res models.NewsResponse, err error)
+		GetOneNewsUC(ctx context.Context, id string) (res models.NewsResponse, err error)
+		UpdateNewsUC(ctx context.Context, req models.NewsRequest) (res int, err error)
+		DeleteNewsUC(ctx context.Context, id string) (res int, err error)
+	}
 )
