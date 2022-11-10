@@ -11,7 +11,8 @@ type (
 		Author    string             `json:"author,omitempty"`
 		Type      string             `json:"type,omitempty"`
 		Title     string             `json:"title,omitempty"`
-		Body      string             `json:"body,omitempty"`
+		Body1     string             `json:"body1,omitempty"`
+		Body2     string             `json:"body2,omitempty"`
 		Quotes    string             `json:"quotes,omitempty"`
 		Header    string             `json:"header,omitempty"`
 		CreatedAt string             `json:"created_at,omitempty"`
@@ -21,7 +22,8 @@ type (
 		Author    string             `json:"author,omitempty"`
 		Type      string             `json:"type,omitempty"`
 		Title     string             `json:"title,omitempty"`
-		Body      string             `json:"body,omitempty"`
+		Body1     string             `json:"body1,omitempty"`
+		Body2     string             `json:"body2,omitempty"`
 		Quotes    string             `json:"quotes,omitempty"`
 		Header    string             `json:"header,omitempty"`
 		CreatedAt string             `json:"created_at,omitempty"`
