@@ -106,3 +106,30 @@ func (uc *CompanyUsecase) GetJobCompany(ctx context.Context, companyId string, j
 
 	return data, err
 }
+
+func (uc *CompanyUsecase) UpdateJobCompanyUC(ctx context.Context, req models.CompanyJobRequest) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//update data
+	res, err = uc.repo.UpdateJobCompany(ctx, req)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
+}
+
+func (uc *CompanyUsecase) DeleteJobCompanyUC(ctx context.Context, companyId string, jobId string) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//delete data
+	res, err = uc.repo.DeleteJobCompany(ctx, companyId, jobId)
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
+}

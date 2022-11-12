@@ -218,3 +218,47 @@ func (ur CompanyRepository) GetJobCompany(ctx context.Context, companyId string,
 		},
 	}, err
 }
+
+func (pr CompanyRepository) UpdateJobCompany(ctx context.Context, req models.CompanyJobRequest) (res int, err error) {
+	companyId, _ := primitive.ObjectIDFromHex(req.CompanyId.Hex())
+	jobId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
+
+	dt := time.Now()
+
+	if _, err = pr.mongoDB.Collection("companydata").UpdateOne(ctx, bson.M{"id": companyId, "companyjob.id": jobId}, bson.M{"$set": bson.M{
+		"companyjob.$.name":        req.Name,
+		"companyjob.$.kind":        req.Kind,
+		"companyjob.$.type":        req.Type,
+		"companyjob.$.status":      req.Status,
+		"companyjob.$.description": req.Description,
+		"companyjob.$.softskill":   req.SoftSkill,
+		"companyjob.$.hardskill":   req.HardSkill,
+		"companyjob.$.education":   req.Education,
+		"companyjob.$.major":       req.Major,
+		"companyjob.$.specificreq": req.SpecificReq,
+		"companyjob.$.placement":   req.Placement,
+		"companyjob.$.available":   req.Available,
+		"companyjob.$.updatedat":   dt.Format("01/02/2006 15:04:05"),
+	}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	//get updated post details
+	var updatedJobCompany models.CompanyJobEntity
+	if err := pr.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": companyId, "companyjob.id": jobId}).Decode(&updatedJobCompany); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	return fiber.StatusOK, nil
+}
+
+func (pr CompanyRepository) DeleteJobCompany(ctx context.Context, reqCompanyId string, reqJobId string) (res int, err error) {
+	companyId, _ := primitive.ObjectIDFromHex(reqCompanyId)
+	jobId, _ := primitive.ObjectIDFromHex(reqJobId)
+
+	if _, err = pr.mongoDB.Collection("companydata").UpdateOne(ctx, bson.M{"id": companyId}, bson.M{"$pull": bson.M{"companyjob": bson.M{"id": jobId}}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	return fiber.StatusOK, nil
+}

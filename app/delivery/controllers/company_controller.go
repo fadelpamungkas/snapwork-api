@@ -148,3 +148,40 @@ func (uc *CompanyController) GetJobCompany(c *fiber.Ctx) error {
 
 	return c.Status(data.Status).JSON(data)
 }
+
+func (nc *CompanyController) UpdateJobCompany(c *fiber.Ctx) error {
+	var req models.CompanyJobRequest
+	//validate the request body
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.CompanyJobResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+	data, err := nc.usecase.UpdateJobCompanyUC(context.Background(), req)
+	if err != nil {
+		return err
+	}
+
+	return c.Status(data).JSON(data)
+}
+
+func (nc *CompanyController) DeleteJobCompany(c *fiber.Ctx) error {
+	companyId := c.Params("companyId")
+	jobId := c.Params("jobId")
+	data, err := nc.usecase.DeleteJobCompanyUC(context.Background(), companyId, jobId)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(models.CompanyJobResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error delete job",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+
+	return c.Status(data).JSON(data)
+}
