@@ -65,7 +65,7 @@ func (pr PersonRepository) UpdatePerson(ctx context.Context, req models.PersonRe
 
 	dt := time.Now()
 
-	if _, err = pr.mongoDB.Collection("news").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
+	if _, err = pr.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
 		"name":            req.Name,
 		"birth":           req.Birth,
 		"gender":          req.Gender,
@@ -98,7 +98,7 @@ func (pr PersonRepository) UpdatePerson(ctx context.Context, req models.PersonRe
 
 	//get updated post details
 	var updatedPerson models.PersonEntity
-	if err := pr.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedPerson); err != nil {
+	if err := pr.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedPerson); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
 
