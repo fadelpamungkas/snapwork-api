@@ -52,4 +52,10 @@ type (
 		UpdateNews(ctx context.Context, req models.NewsRequest) (res int, err error)
 		DeleteNews(ctx context.Context, id string) (res int, err error)
 	}
+
+	PersonRepositoryI interface {
+		InsertPerson(ctx context.Context, req models.PersonRequest) (res int, err error)
+		GetPerson(ctx context.Context, id string) (res models.PersonResponse, err error)
+		UpdatePerson(ctx context.Context, req models.PersonRequest) (res int, err error)
+	}
 )

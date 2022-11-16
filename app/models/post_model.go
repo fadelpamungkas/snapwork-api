@@ -18,11 +18,6 @@ type (
 		AuthorName string             `json:"authorName,omitempty" validate:"required"`
 		Images     []Image            `json:"images,omitempty"`
 	}
-	Image struct {
-		Id   primitive.ObjectID `json:"_id,omitempty"`
-		Name string             `json:"name,omitempty"`
-		Url  string             `json:"url,omitempty"`
-	}
 	PostRequest struct {
 		Id         primitive.ObjectID `json:"_id,omitempty"`
 		Title      string             `json:"title" validate:"required"`

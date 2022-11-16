@@ -52,4 +52,10 @@ type (
 		UpdateNewsUC(ctx context.Context, req models.NewsRequest) (res int, err error)
 		DeleteNewsUC(ctx context.Context, id string) (res int, err error)
 	}
+
+	PersonUsecaseI interface {
+		InsertPersonUC(ctx context.Context, req models.PersonRequest) (res int, err error)
+		GetPersonUC(ctx context.Context, id string) (res models.PersonResponse, err error)
+		UpdatePersonUC(ctx context.Context, req models.PersonRequest) (res int, err error)
+	}
 )

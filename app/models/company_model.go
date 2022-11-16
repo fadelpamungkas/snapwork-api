@@ -13,19 +13,19 @@ type (
 		Name          string             `json:"name,omitempty"`
 		Email         string             `json:"email,omitempty"`
 		IndustryType  string             `json:"industrytype,omitempty"`
-		Website       string             `json:"website,omitempty""`
-		Phone         string             `json:"phone,omitempty""`
-		Description   string             `json:"description,omitempty""`
-		Country       string             `json:"country,omitempty""`
-		Province      string             `json:"province,omitempty""`
-		City          string             `json:"city,omitempty""`
-		Address       string             `json:"address,omitempty""`
+		Website       string             `json:"website,omitempty"`
+		Phone         string             `json:"phone,omitempty"`
+		Description   string             `json:"description,omitempty"`
+		Country       string             `json:"country,omitempty"`
+		Province      string             `json:"province,omitempty"`
+		City          string             `json:"city,omitempty"`
+		Address       string             `json:"address,omitempty"`
 		PostalCode    string             `json:"postalcode,omitempty"`
-		OfficerName   string             `json:"officername,omitempty""`
-		OfficerEmail  string             `json:"officeremail,omitempty""`
-		OfficerPhone  string             `json:"officerphone,omitempty""`
-		OfficerMobile string             `json:"officermobile,omitempty""`
-		CreatedAt     string             `json:"created_at,omitempty""`
+		OfficerName   string             `json:"officername,omitempty"`
+		OfficerEmail  string             `json:"officeremail,omitempty"`
+		OfficerPhone  string             `json:"officerphone,omitempty"`
+		OfficerMobile string             `json:"officermobile,omitempty"`
+		CreatedAt     string             `json:"created_at,omitempty"`
 		CompanyJob    []CompanyJobEntity `json:"companyjob,omitempty"`
 	}
 	CompanyRequest struct {
@@ -35,19 +35,19 @@ type (
 		Name          string             `json:"name,omitempty"`
 		Email         string             `json:"email,omitempty"`
 		IndustryType  string             `json:"industrytype,omitempty"`
-		Website       string             `json:"website,omitempty""`
-		Phone         string             `json:"phone,omitempty""`
-		Description   string             `json:"description,omitempty""`
-		Country       string             `json:"country,omitempty""`
-		Province      string             `json:"province,omitempty""`
-		City          string             `json:"city,omitempty""`
-		Address       string             `json:"address,omitempty""`
+		Website       string             `json:"website,omitempty"`
+		Phone         string             `json:"phone,omitempty"`
+		Description   string             `json:"description,omitempty"`
+		Country       string             `json:"country,omitempty"`
+		Province      string             `json:"province,omitempty"`
+		City          string             `json:"city,omitempty"`
+		Address       string             `json:"address,omitempty"`
 		PostalCode    string             `json:"postalcode,omitempty"`
-		OfficerName   string             `json:"officername,omitempty""`
-		OfficerEmail  string             `json:"officeremail,omitempty""`
-		OfficerPhone  string             `json:"officerphone,omitempty""`
-		OfficerMobile string             `json:"officermobile,omitempty""`
-		CreatedAt     string             `json:"created_at,omitempty""`
+		OfficerName   string             `json:"officername,omitempty"`
+		OfficerEmail  string             `json:"officeremail,omitempty"`
+		OfficerPhone  string             `json:"officerphone,omitempty"`
+		OfficerMobile string             `json:"officermobile,omitempty"`
+		CreatedAt     string             `json:"created_at,omitempty"`
 		CompanyJob    []CompanyJobEntity `json:"companyjob,omitempty"`
 	}
 	CompanyResponse struct {
@@ -61,16 +61,16 @@ type (
 		Kind        string             `json:"kind,omitempty"`
 		Type        string             `json:"type,omitempty"`
 		Status      string             `json:"status,omitempty"`
-		Description string             `json:"description,omitempty""`
-		SoftSkill   string             `json:"softskill,omitempty""`
-		HardSkill   string             `json:"hardskill,omitempty""`
-		Education   string             `json:"education,omitempty""`
-		Major       string             `json:"major,omitempty""`
-		SpecificReq string             `json:"specificreq,omitempty""`
+		Description string             `json:"description,omitempty"`
+		SoftSkill   string             `json:"softskill,omitempty"`
+		HardSkill   string             `json:"hardskill,omitempty"`
+		Education   string             `json:"education,omitempty"`
+		Major       string             `json:"major,omitempty"`
+		SpecificReq string             `json:"specificreq,omitempty"`
 		Placement   string             `json:"placement,omitempty"`
-		Available   string             `json:"available,omitempty""`
-		CreatedAt   string             `json:"created_at,omitempty""`
-		UpdatedAt   string             `json:"updated_at,omitempty""`
+		Available   string             `json:"available,omitempty"`
+		CreatedAt   string             `json:"created_at,omitempty"`
+		UpdatedAt   string             `json:"updated_at,omitempty"`
 	}
 	CompanyJobRequest struct {
 		Id          primitive.ObjectID `json:"_id,omitempty"`
@@ -79,16 +79,16 @@ type (
 		Kind        string             `json:"kind,omitempty"`
 		Type        string             `json:"type,omitempty"`
 		Status      string             `json:"status,omitempty"`
-		Description string             `json:"description,omitempty""`
-		SoftSkill   string             `json:"softskill,omitempty""`
-		HardSkill   string             `json:"hardskill,omitempty""`
-		Education   string             `json:"education,omitempty""`
-		Major       string             `json:"major,omitempty""`
-		SpecificReq string             `json:"specificreq,omitempty""`
+		Description string             `json:"description,omitempty"`
+		SoftSkill   string             `json:"softskill,omitempty"`
+		HardSkill   string             `json:"hardskill,omitempty"`
+		Education   string             `json:"education,omitempty"`
+		Major       string             `json:"major,omitempty"`
+		SpecificReq string             `json:"specificreq,omitempty"`
 		Placement   string             `json:"placement,omitempty"`
-		Available   string             `json:"available,omitempty""`
-		CreatedAt   string             `json:"created_at,omitempty""`
-		UpdatedAt   string             `json:"updated_at,omitempty""`
+		Available   string             `json:"available,omitempty"`
+		CreatedAt   string             `json:"created_at,omitempty"`
+		UpdatedAt   string             `json:"updated_at,omitempty"`
 	}
 	CompanyJobResponse struct {
 		Status  int        `json:"status"`
