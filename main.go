@@ -60,7 +60,7 @@ func main() {
 	newsUsecase := usecase.NewNewsUsecase(newsRepo)
 	delivery.NewsRoute(app, newsUsecase)
 
-	// News
+	// Person
 	personRepo := repository.NewPersonRepository(mongo)
 	personUsecase := usecase.NewPersonUsecase(personRepo)
 	delivery.PersonRoute(app, personUsecase)

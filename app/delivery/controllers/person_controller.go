@@ -53,12 +53,12 @@ func (nc *PersonController) InsertPerson(c *fiber.Ctx) error {
 }
 
 func (pc *PersonController) GetPerson(c *fiber.Ctx) error {
-	newsId := c.Params("newsId")
+	newsId := c.Params("personId")
 	data, err := pc.usecase.GetPersonUC(context.Background(), newsId)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(models.PersonResponse{
 			Status:  fiber.StatusInternalServerError,
-			Message: "Error getting news",
+			Message: "Error getting person",
 			Data: &fiber.Map{
 				"data": err.Error(),
 			},

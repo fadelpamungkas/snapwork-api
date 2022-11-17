@@ -43,7 +43,7 @@ func (ur PersonRepository) GetPerson(ctx context.Context, id string) (res models
 	var person models.PersonEntity
 
 	reqId, _ := primitive.ObjectIDFromHex(id)
-	if err := ur.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"id": reqId}).Decode(&person); err != nil {
+	if err := ur.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"userid": reqId}).Decode(&person); err != nil {
 		return models.PersonResponse{
 			Status:  fiber.StatusInternalServerError,
 			Message: "Error getting person data",
