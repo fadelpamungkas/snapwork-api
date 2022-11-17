@@ -34,7 +34,7 @@ type (
 		CV              Image              `json:"cv,omitempty"`
 		Certificate     Image              `json:"certificate,omitempty"`
 		SelfDevelopment SelfDevelopment    `json:"selfdevelopment,omitempty"`
-		Education       Education          `json:"lasteducation,omitempty"`
+		Education       Education          `json:"education,omitempty"`
 		Career          []Career           `json:"career,omitempty"`
 		CreatedAt       string             `json:"created_at,omitempty"`
 		UpdatedAt       string             `json:"updated_at,omitempty"`
@@ -65,7 +65,7 @@ type (
 		CV              *multipart.Form    `json:"cv,omitempty"`
 		Certificate     *multipart.Form    `json:"certificate,omitempty"`
 		SelfDevelopment SelfDevelopment    `json:"selfdevelopment,omitempty"`
-		Education       Education          `json:"lasteducation,omitempty"`
+		Education       Education          `json:"education,omitempty"`
 		Career          []Career           `json:"career,omitempty"`
 		UpdatedAt       string             `json:"updated_at,omitempty"`
 	}
