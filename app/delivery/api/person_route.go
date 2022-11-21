@@ -12,7 +12,9 @@ func PersonRoute(app *fiber.App, u usecase.PersonUsecaseI) {
 
 	api := app.Group("/api")
 
-	api.Get("/person/:personId", c.GetPerson) // Get person
-	api.Post("/person", c.InsertPerson)       // create new person data
-	api.Put("/person", c.UpdatePerson)        // Update an existing person
+	api.Get("/person/:personId", c.GetPerson)             // Get person
+	api.Post("/person", c.InsertPerson)                   // create new person data
+	api.Put("/person/notification", c.InsertNotification) // Add new notification
+	api.Put("/person", c.UpdatePerson)                    // Update an existing person
+	// api.Put("/person/document", c.UpdatePersonDocument)  // Update uploadded document
 }

@@ -27,15 +27,11 @@ type (
 		State           string             `json:"state,omitempty"`
 		About           string             `json:"about,omitempty"`
 		Portfolio       string             `json:"portfolio,omitempty"`
-		Avatar          Image              `json:"avatar,omitempty"`
-		KTP             Image              `json:"ktp,omitempty"`
-		Ijazah          Image              `json:"ijazah,omitempty"`
-		SKCK            Image              `json:"skck,omitempty"`
-		CV              Image              `json:"cv,omitempty"`
-		Certificate     Image              `json:"certificate,omitempty"`
+		Document        Document           `json:"document,omitempty"`
 		SelfDevelopment SelfDevelopment    `json:"selfdevelopment,omitempty"`
 		Education       Education          `json:"education,omitempty"`
 		Career          []Career           `json:"career,omitempty"`
+		Notification    []Notification     `json:"notification,omitempty"`
 		CreatedAt       string             `json:"created_at,omitempty"`
 		UpdatedAt       string             `json:"updated_at,omitempty"`
 	}

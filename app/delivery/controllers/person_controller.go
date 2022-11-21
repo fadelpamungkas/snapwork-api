@@ -87,3 +87,34 @@ func (nc *PersonController) UpdatePerson(c *fiber.Ctx) error {
 
 	return c.Status(data).JSON(data)
 }
+
+func (uc *PersonController) InsertNotification(c *fiber.Ctx) error {
+	var validate = validator.New()
+	var req models.Notification
+	//validate the request body
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+	//use validator library to validate required fields
+	if validationErr := validate.Struct(&req); validationErr != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": validationErr.Error(),
+			},
+		})
+	}
+	data, err := uc.usecase.InsertNotificationUC(context.Background(), req)
+	if err != nil {
+		return err
+	}
+
+	return c.Status(data).JSON(data)
+}

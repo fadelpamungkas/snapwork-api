@@ -59,3 +59,17 @@ func (uc *PersonUsecase) UpdatePersonUC(ctx context.Context, req models.PersonRe
 	}
 	return res, nil
 }
+
+func (uc *PersonUsecase) InsertNotificationUC(ctx context.Context, req models.Notification) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//insert data
+	res, err = uc.repo.InsertNotification(ctx, req)
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
+}

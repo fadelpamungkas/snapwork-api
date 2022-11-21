@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"golangapi/app/models"
+	"log"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -101,6 +102,48 @@ func (pr PersonRepository) UpdatePerson(ctx context.Context, req models.PersonRe
 	if err := pr.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedPerson); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
+
+	return fiber.StatusOK, nil
+}
+
+func (ur PersonRepository) InsertNotification(ctx context.Context, req models.Notification) (res int, err error) {
+	dt := time.Now()
+
+	reqId, _ := primitive.ObjectIDFromHex(req.UserId.Hex())
+
+	notifications := []models.Notification{}
+
+	//get updated post details
+	var currentData models.PersonEntity
+	if err := ur.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"userid": reqId}).Decode(&currentData); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	newNotification := models.Notification{
+		Id:          primitive.NewObjectID(),
+		UserId:      req.UserId,
+		Status:      req.Status,
+		Title:       req.Title,
+		Description: req.Description,
+		IsRead:      req.IsRead,
+		CreatedAt:   dt.Format("01/02/2006 15:04:05"),
+	}
+
+	notifications = append(currentData.Notification, newNotification)
+
+	if _, err = ur.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"userid": reqId}, bson.M{"$set": bson.M{
+		"notification": notifications,
+	}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	//get updated post details
+	var updatedNotification models.Notification
+	if err := ur.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"userid": reqId}).Decode(&updatedNotification); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	log.Println(updatedNotification)
 
 	return fiber.StatusOK, nil
 }
