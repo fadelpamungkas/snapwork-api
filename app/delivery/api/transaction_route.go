@@ -14,10 +14,8 @@ func TransactionRoute(app *fiber.App, u usecase.TransactionUsecaseI) {
 
 	// api.Get("/users", middlewares.Auth, c.GetAllUsers)    // Get all users
 	// api.Get("/authuser", middlewares.Auth, c.GetAuthUser) // Get auth user
-	api.Get("/transaction/orders", c.GetAllOrder)                                              // Get all companies
-	api.Post("/transaction/order", c.InsertOrder)                                              // Get all companies
-	api.Get("/transaction/applicationsbycompanyid/:companyId", c.GetAllApplicationByCompanyId) // Get all companies
-	api.Get("/transaction/applicationsbyuserid/:userId", c.GetAllApplicationByUserId)          // Get all companies
-	api.Post("/transaction/application", c.InsertApplication)                                  // Get all companies
-	api.Put("/transaction/application/status", c.UpdateApplicationStatus)                      // Update an existing user
+	api.Get("/transaction/orders", c.GetAllOrder)                         // Get all order
+	api.Post("/transaction/order", c.InsertOrder)                         // Create new order
+	api.Post("/transaction/application", c.InsertApplication)             // Insert new application
+	api.Put("/transaction/application/status", c.UpdateApplicationStatus) // Update application status
 }

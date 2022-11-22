@@ -100,40 +100,6 @@ func (uc *TransactionController) InsertApplication(c *fiber.Ctx) error {
 	return c.Status(data).JSON(data)
 }
 
-func (uc *TransactionController) GetAllApplicationByCompanyId(c *fiber.Ctx) error {
-	companyId := c.Params("companyId")
-	data, err := uc.usecase.GetAllApplicationByCompanyIdUC(context.Background(), companyId)
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(models.ApplicationResponse{
-			Status:  fiber.StatusInternalServerError,
-			Message: "Error getting all application data",
-			Data: &fiber.Map{
-				"data": err.Error(),
-			},
-		})
-	}
-
-	// authUser := c.Locals("authUser")
-	return c.Status(data.Status).JSON(data)
-}
-
-func (uc *TransactionController) GetAllApplicationByUserId(c *fiber.Ctx) error {
-	userId := c.Params("userId")
-	data, err := uc.usecase.GetAllApplicationByUserIdUC(context.Background(), userId)
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(models.ApplicationResponse{
-			Status:  fiber.StatusInternalServerError,
-			Message: "Error getting all application data",
-			Data: &fiber.Map{
-				"data": err.Error(),
-			},
-		})
-	}
-
-	// authUser := c.Locals("authUser")
-	return c.Status(data.Status).JSON(data)
-}
-
 func (uc *TransactionController) UpdateApplicationStatus(c *fiber.Ctx) error {
 	var req models.ApplicationStatusRequest
 	//validate the request body
