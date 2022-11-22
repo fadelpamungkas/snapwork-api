@@ -61,21 +61,6 @@ func (uc *TransactionUsecase) InsertApplicationUC(ctx context.Context, req model
 	return res, nil
 }
 
-func (uc *TransactionUsecase) GetAllApplicationUC(ctx context.Context) (res models.ApplicationResponse, err error) {
-	if ctx == nil {
-		ctx = context.Background()
-	}
-
-	//get all data
-	list, err := uc.repo.GetAllApplication(ctx)
-	if err != nil {
-		log.Println("failed to show data product with default log")
-		return list, err
-	}
-
-	return list, err
-}
-
 func (uc *TransactionUsecase) GetAllApplicationByCompanyIdUC(ctx context.Context, id string) (res models.ApplicationResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()
@@ -104,4 +89,17 @@ func (uc *TransactionUsecase) GetAllApplicationByUserIdUC(ctx context.Context, i
 	}
 
 	return list, err
+}
+
+func (uc *TransactionUsecase) UpdateApplicationStatusUC(ctx context.Context, req models.ApplicationStatusRequest) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//update data
+	res, err = uc.repo.UpdateApplicationStatus(ctx, req)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
 }

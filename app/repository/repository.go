@@ -29,9 +29,9 @@ type (
 		InsertOrder(ctx context.Context, req models.OrderRequest) (res int, err error)
 		GetAllOrder(ctx context.Context) (res models.OrderResponse, err error)
 		InsertApplication(ctx context.Context, req models.ApplicationRequest) (res int, err error)
-		GetAllApplication(ctx context.Context) (res models.ApplicationResponse, err error)
 		GetAllApplicationByCompanyId(ctx context.Context, id string) (res models.ApplicationResponse, err error)
 		GetAllApplicationByUserId(ctx context.Context, id string) (res models.ApplicationResponse, err error)
+		UpdateApplicationStatus(ctx context.Context, req models.ApplicationStatusRequest) (res int, err error)
 	}
 
 	CompanyRepositoryI interface {

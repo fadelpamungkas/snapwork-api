@@ -29,9 +29,9 @@ type (
 		InsertOrderUC(ctx context.Context, req models.OrderRequest) (res int, err error)
 		GetAllOrderUC(ctx context.Context) (res models.OrderResponse, err error)
 		InsertApplicationUC(ctx context.Context, req models.ApplicationRequest) (res int, err error)
-		GetAllApplicationUC(ctx context.Context) (res models.ApplicationResponse, err error)
 		GetAllApplicationByCompanyIdUC(ctx context.Context, id string) (res models.ApplicationResponse, err error)
 		GetAllApplicationByUserIdUC(ctx context.Context, id string) (res models.ApplicationResponse, err error)
+		UpdateApplicationStatusUC(ctx context.Context, req models.ApplicationStatusRequest) (res int, err error)
 	}
 
 	CompanyUsecaseI interface {
