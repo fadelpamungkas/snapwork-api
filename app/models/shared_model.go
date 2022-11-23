@@ -20,11 +20,13 @@ type (
 		Certificate Image              `json:"certificate,omitempty"`
 	}
 	Education struct {
-		Id            primitive.ObjectID `json:"_id,omitempty"`
-		Name          string             `json:"name,omitempty"`
-		Concentration string             `json:"concentration,omitempty"`
-		Date          string             `json:"date,omitempty"`
-		Degree        string             `json:"degree,omitempty"`
+		Id       primitive.ObjectID `json:"_id,omitempty"`
+		S1       string             `json:"s1,omitempty"`
+		S1Major  string             `json:"s1major,omitempty"`
+		S1Date   string             `json:"s1date,omitempty"`
+		SMA      string             `json:"sma,omitempty"`
+		SMAMajor string             `json:"smamajor,omitempty"`
+		SMADate  string             `json:"smadate,omitempty"`
 	}
 	SelfDevelopment struct {
 		Id     primitive.ObjectID `json:"_id,omitempty"`
