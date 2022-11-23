@@ -49,7 +49,6 @@ type (
 		PersonId      primitive.ObjectID `json:"personid,omitempty"`
 		CompanyId     primitive.ObjectID `json:"companyid,omitempty"`
 		CompanyJobId  primitive.ObjectID `json:"companyjobid,omitempty"`
-		Status        string             `json:"status,omitempty"`
 		CompanyName   string             `json:"companyname,omitempty"`
 		JobPosition   string             `json:"jobposition,omitempty"`
 		JobPlacement  string             `json:"jobplacement,omitempty"`
