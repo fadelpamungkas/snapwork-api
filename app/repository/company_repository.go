@@ -238,7 +238,7 @@ func (pr CompanyRepository) UpdateJobCompany(ctx context.Context, req models.Com
 		"companyjob.$.specificreq": req.SpecificReq,
 		"companyjob.$.placement":   req.Placement,
 		"companyjob.$.available":   req.Available,
-		"companyjob.$.updatedat":   dt.Format("01/02/2006 15:04:05"),
+		"companyjob.$.updated_at":  dt.Format("01/02/2006 15:04:05"),
 	}}); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
