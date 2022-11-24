@@ -180,8 +180,8 @@ func (ur TransactionRepository) UpdateApplicationStatus(ctx context.Context, req
 	}
 
 	updateData := bson.M{
-		"applications.status":     req.Status,
-		"applications.updated_at": dt.Format("01/02/2006 15:04:05"),
+		"applications.$.status":     req.Status,
+		"applications.$.updated_at": dt.Format("01/02/2006 15:04:05"),
 	}
 
 	if _, err = ur.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"id": personId, "applications.id": applicationId}, bson.M{"$set": updateData}); err != nil {
