@@ -73,7 +73,6 @@ type (
 		ApplicationId primitive.ObjectID `json:"applicationid,omitempty"`
 		PersonId      primitive.ObjectID `json:"personid,omitempty"`
 		CompanyId     primitive.ObjectID `json:"companyid,omitempty"`
-		CompanyJobId  primitive.ObjectID `json:"companyjobid,omitempty"`
 		Status        string             `json:"status,omitempty"`
 	}
 	ApplicationResponse struct {
