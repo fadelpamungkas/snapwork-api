@@ -179,8 +179,28 @@ func (ur TransactionRepository) UpdateApplicationStatus(ctx context.Context, req
 		return fiber.StatusInternalServerError, err
 	}
 
+	var status = [6]string{"Applied", "Screening", "Interview", "Test", "Accepted", "Rejected"}
+	var currentStatus string
+
+	switch req.Status {
+	case status[0]:
+		currentStatus = status[1]
+	case status[1]:
+		currentStatus = status[2]
+	case status[2]:
+		currentStatus = status[3]
+	case status[3]:
+		currentStatus = status[4]
+	case status[4]:
+		currentStatus = status[4]
+	case status[5]:
+		currentStatus = status[5]
+	default:
+		currentStatus = status[0]
+	}
+
 	updateData := bson.M{
-		"applications.$.status":     req.Status,
+		"applications.$.status":     currentStatus,
 		"applications.$.updated_at": dt.Format("01/02/2006 15:04:05"),
 	}
 
