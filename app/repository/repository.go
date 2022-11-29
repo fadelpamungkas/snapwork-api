@@ -57,4 +57,9 @@ type (
 		UpdatePerson(ctx context.Context, req models.PersonRequest) (res int, err error)
 		InsertNotification(ctx context.Context, req models.Notification) (res int, err error)
 	}
+
+	AssessmentRepositoryI interface {
+		InsertAssessment(ctx context.Context, req models.AssessmentRequest) (res int, err error)
+		GetAllAssessment(ctx context.Context) (res models.AssessmentResponse, err error)
+	}
 )

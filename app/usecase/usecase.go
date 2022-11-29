@@ -57,4 +57,9 @@ type (
 		UpdatePersonUC(ctx context.Context, req models.PersonRequest) (res int, err error)
 		InsertNotificationUC(ctx context.Context, req models.Notification) (res int, err error)
 	}
+
+	AssessmentUsecaseI interface {
+		InsertAssessmentUC(ctx context.Context, req models.AssessmentRequest) (res int, err error)
+		GetAllAssessmentUC(ctx context.Context) (res models.AssessmentResponse, err error)
+	}
 )

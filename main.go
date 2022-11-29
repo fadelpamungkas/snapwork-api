@@ -45,12 +45,12 @@ func main() {
 	postUsecase := usecase.NewPostUsecase(postRepo)
 	delivery.PostRoute(app, postUsecase)
 
-	// Post
+	// Transaction
 	transRepo := repository.NewTransactionRepository(mongo)
 	transUsecase := usecase.NewTransactionUsecase(transRepo)
 	delivery.TransactionRoute(app, transUsecase)
 
-	// Post
+	// Company
 	companyRepo := repository.NewCompanyRepository(mongo)
 	companyUsecase := usecase.NewCompanyUsecase(companyRepo)
 	delivery.CompanyRoute(app, companyUsecase)
@@ -64,6 +64,11 @@ func main() {
 	personRepo := repository.NewPersonRepository(mongo)
 	personUsecase := usecase.NewPersonUsecase(personRepo)
 	delivery.PersonRoute(app, personUsecase)
+
+	// Assessment
+	assessmentRepo := repository.NewAssessmentRepository(mongo)
+	assessmentUsecase := usecase.NewAssessmentUsecase(assessmentRepo)
+	delivery.AssessmentRoute(app, assessmentUsecase)
 
 	// Heroku automatically assigns a port our web server.
 	// If it fails we instruct it to use port 000
