@@ -54,7 +54,7 @@ type (
 	}
 	CompanyStatusRequest struct {
 		CompanyId primitive.ObjectID `json:"companyid,omitempty"`
-		Status    string             `json:"status,omitempty"`
+		Status    int                `json:"status,omitempty"`
 	}
 	CompanyResponse struct {
 		Status  int        `json:"status"`

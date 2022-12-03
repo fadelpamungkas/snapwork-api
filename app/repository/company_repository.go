@@ -61,8 +61,19 @@ func (ur CompanyRepository) UpdateCompanyStatus(ctx context.Context, req models.
 		return fiber.StatusInternalServerError, err
 	}
 
+	var status string
+
+	switch req.Status {
+	case 1:
+		status = "Verified"
+	case 2:
+		status = "Decline"
+	default:
+		status = "Pending"
+	}
+
 	updateData := bson.M{
-		"status": "Verified",
+		"status": status,
 	}
 
 	if _, err = ur.mongoDB.Collection("companydata").UpdateOne(ctx, bson.M{"id": companyId}, bson.M{"$set": updateData}); err != nil {
