@@ -54,6 +54,29 @@ func (ur CompanyRepository) InsertCompany(ctx context.Context, req models.Compan
 	return fiber.StatusOK, nil
 }
 
+func (ur CompanyRepository) UpdateCompanyStatus(ctx context.Context, req models.CompanyStatusRequest) (res int, err error) {
+
+	companyId, _ := primitive.ObjectIDFromHex(req.CompanyId.Hex())
+	if err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	updateData := bson.M{
+		"status": "Verified",
+	}
+
+	if _, err = ur.mongoDB.Collection("companydata").UpdateOne(ctx, bson.M{"id": companyId}, bson.M{"$set": updateData}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	var updatedCompany models.CompanyEntity
+	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": companyId}).Decode(&updatedCompany); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	return fiber.StatusOK, nil
+}
+
 func (ur CompanyRepository) GetAllCompanies(ctx context.Context) (res models.CompanyResponse, err error) {
 
 	results, err := ur.mongoDB.Collection("companydata").Find(ctx, bson.M{})

@@ -34,6 +34,7 @@ type (
 
 	CompanyUsecaseI interface {
 		InsertCompanyUC(ctx context.Context, req models.CompanyRequest) (res int, err error)
+		UpdateCompanyStatusUC(ctx context.Context, req models.CompanyStatusRequest) (res int, err error)
 		GetAllCompaniesUC(ctx context.Context) (res models.CompanyResponse, err error)
 		InsertJobUC(ctx context.Context, req models.CompanyJobRequest) (res int, err error)
 		GetCompany(ctx context.Context, id string) (res models.CompanyResponse, err error)

@@ -52,6 +52,10 @@ type (
 		Applications  []ApplicationCompanyEntity `json:"applications,omitempty"`
 		CreatedAt     string                     `json:"created_at,omitempty"`
 	}
+	CompanyStatusRequest struct {
+		CompanyId primitive.ObjectID `json:"companyid,omitempty"`
+		Status    string             `json:"status,omitempty"`
+	}
 	CompanyResponse struct {
 		Status  int        `json:"status"`
 		Message string     `json:"message"`

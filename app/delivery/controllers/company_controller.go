@@ -52,6 +52,33 @@ func (uc *CompanyController) InsertCompany(c *fiber.Ctx) error {
 	return c.Status(data).JSON(data)
 }
 
+func (uc *CompanyController) UpdateCompanyStatus(c *fiber.Ctx) error {
+	var req models.CompanyStatusRequest
+	//validate the request body
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.CompanyResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+
+	data, err := uc.usecase.UpdateCompanyStatusUC(context.Background(), req)
+	if err != nil {
+		return c.Status(data).JSON(models.CompanyResponse{
+			Status:  data,
+			Message: "Error Update",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+
+	return c.Status(data).JSON(data)
+}
+
 func (uc *CompanyController) GetAllCompanies(c *fiber.Ctx) error {
 
 	data, err := uc.usecase.GetAllCompaniesUC(context.Background())

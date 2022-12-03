@@ -32,6 +32,18 @@ func (uc *CompanyUsecase) InsertCompanyUC(ctx context.Context, req models.Compan
 	return res, nil
 }
 
+func (uc *CompanyUsecase) UpdateCompanyStatusUC(ctx context.Context, req models.CompanyStatusRequest) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//update data
+	res, err = uc.repo.UpdateCompanyStatus(ctx, req)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
+}
 
 func (uc *CompanyUsecase) GetAllCompaniesUC(ctx context.Context) (res models.CompanyResponse, err error) {
 	if ctx == nil {
