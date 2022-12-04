@@ -100,6 +100,8 @@ type (
 	CompanyJobPaymentEntity struct {
 		Status    string `json:"status,omitempty"`
 		Packet    int    `json:"packet,omitempty"`
+		Price     int    `json:"price,omitempty"`
+		Until     string `json:"until,omitempty"`
 		FileProof string `json:"fileproof,omitempty"`
 		CreatedAt string `json:"created_at,omitempty"`
 	}

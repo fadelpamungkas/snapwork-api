@@ -129,7 +129,7 @@ func (uc *CompanyController) InsertJob(c *fiber.Ctx) error {
 
 func (uc *CompanyController) GetCompany(c *fiber.Ctx) error {
 	companyId := c.Params("companyId")
-	data, err := uc.usecase.GetCompany(context.Background(), companyId)
+	data, err := uc.usecase.GetCompanyUC(context.Background(), companyId)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(models.CompanyResponse{
 			Status:  fiber.StatusInternalServerError,
@@ -145,7 +145,7 @@ func (uc *CompanyController) GetCompany(c *fiber.Ctx) error {
 
 func (uc *CompanyController) GetCompanyByUserId(c *fiber.Ctx) error {
 	userId := c.Params("userId")
-	data, err := uc.usecase.GetCompanyByUserId(context.Background(), userId)
+	data, err := uc.usecase.GetCompanyByUserIdUC(context.Background(), userId)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(models.CompanyResponse{
 			Status:  fiber.StatusInternalServerError,
@@ -162,7 +162,7 @@ func (uc *CompanyController) GetCompanyByUserId(c *fiber.Ctx) error {
 func (uc *CompanyController) GetJobCompany(c *fiber.Ctx) error {
 	companyId := c.Params("companyId")
 	jobId := c.Params("jobId")
-	data, err := uc.usecase.GetJobCompany(context.Background(), companyId, jobId)
+	data, err := uc.usecase.GetJobCompanyUC(context.Background(), companyId, jobId)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(models.CompanyJobResponse{
 			Status:  fiber.StatusInternalServerError,
@@ -208,6 +208,26 @@ func (nc *CompanyController) DeleteJobCompany(c *fiber.Ctx) error {
 				"data": err.Error(),
 			},
 		})
+	}
+
+	return c.Status(data).JSON(data)
+}
+
+func (nc *CompanyController) UpdateJobPayment(c *fiber.Ctx) error {
+	var req models.CompanyJobPaymentRequest
+	//validate the request body
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.CompanyJobResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+	data, err := nc.usecase.UpdateJobPaymentUC(context.Background(), req)
+	if err != nil {
+		return err
 	}
 
 	return c.Status(data).JSON(data)

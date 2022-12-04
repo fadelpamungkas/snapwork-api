@@ -42,6 +42,7 @@ type (
 		GetJobCompany(ctx context.Context, companyId string, jobId string) (res models.CompanyJobResponse, err error)
 		UpdateJobCompany(ctx context.Context, req models.CompanyJobRequest) (res int, err error)
 		DeleteJobCompany(ctx context.Context, companyId string, jobId string) (res int, err error)
+		UpdateJobPayment(ctx context.Context, req models.CompanyJobPaymentRequest) (res int, err error)
 	}
 
 	NewsRepositoryI interface {

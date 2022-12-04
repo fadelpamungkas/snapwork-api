@@ -74,7 +74,7 @@ func (uc *CompanyUsecase) InsertJobUC(ctx context.Context, req models.CompanyJob
 	return res, nil
 }
 
-func (uc *CompanyUsecase) GetCompany(ctx context.Context, id string) (res models.CompanyResponse, err error) {
+func (uc *CompanyUsecase) GetCompanyUC(ctx context.Context, id string) (res models.CompanyResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -89,7 +89,7 @@ func (uc *CompanyUsecase) GetCompany(ctx context.Context, id string) (res models
 	return data, err
 }
 
-func (uc *CompanyUsecase) GetCompanyByUserId(ctx context.Context, id string) (res models.CompanyResponse, err error) {
+func (uc *CompanyUsecase) GetCompanyByUserIdUC(ctx context.Context, id string) (res models.CompanyResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -104,7 +104,7 @@ func (uc *CompanyUsecase) GetCompanyByUserId(ctx context.Context, id string) (re
 	return data, err
 }
 
-func (uc *CompanyUsecase) GetJobCompany(ctx context.Context, companyId string, jobId string) (res models.CompanyJobResponse, err error) {
+func (uc *CompanyUsecase) GetJobCompanyUC(ctx context.Context, companyId string, jobId string) (res models.CompanyJobResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -143,5 +143,18 @@ func (uc *CompanyUsecase) DeleteJobCompanyUC(ctx context.Context, companyId stri
 		return res, err
 	}
 
+	return res, nil
+}
+
+func (uc *CompanyUsecase) UpdateJobPaymentUC(ctx context.Context, req models.CompanyJobPaymentRequest) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//update data
+	res, err = uc.repo.UpdateJobPayment(ctx, req)
+	if err != nil {
+		return res, err
+	}
 	return res, nil
 }

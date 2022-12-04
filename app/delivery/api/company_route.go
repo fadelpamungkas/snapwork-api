@@ -20,6 +20,7 @@ func CompanyRoute(app *fiber.App, u usecase.CompanyUsecaseI) {
 	api.Post("/company", c.InsertCompany)                        // Get all companies
 	api.Post("/company/job", c.InsertJob)                        // Get all companies
 	api.Put("/company/job", c.UpdateJobCompany)                  // Update an existing post
+	api.Put("/company/job/payment", c.UpdateJobPayment)          // Update job payment
 	api.Put("/company/status", c.UpdateCompanyStatus)            // Update company status
 	api.Delete("/company/:companyId/:jobId", c.DeleteJobCompany) // Delete post
 }

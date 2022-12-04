@@ -315,3 +315,47 @@ func (pr CompanyRepository) DeleteJobCompany(ctx context.Context, reqCompanyId s
 
 	return fiber.StatusOK, nil
 }
+
+func (pr CompanyRepository) UpdateJobPayment(ctx context.Context, req models.CompanyJobPaymentRequest) (res int, err error) {
+
+	dt := time.Now()
+
+	companyId, _ := primitive.ObjectIDFromHex(req.CompanyId.Hex())
+	jobId, _ := primitive.ObjectIDFromHex(req.CompanyJobId.Hex())
+
+	var until time.Time
+	var price int
+
+	switch req.Packet {
+	case 1:
+		until = dt.Add(time.Hour * 10 * 24)
+		price = 25000
+	case 2:
+		until = dt.Add(time.Hour * 20 * 24)
+		price = 40000
+	case 3:
+		until = dt.Add(time.Hour * 30 * 24)
+		price = 50000
+	default:
+		until = dt
+		price = 0
+	}
+
+	if _, err = pr.mongoDB.Collection("companydata").UpdateOne(ctx, bson.M{"id": companyId, "companyjob.id": jobId}, bson.M{"$set": bson.M{
+		"companyjob.$.payment.status":     req.Status,
+		"companyjob.$.payment.packet":     req.Packet,
+		"companyjob.$.payment.price":      price,
+		"companyjob.$.payment.until":      until,
+		"companyjob.$.payment.fileproof":  req.FileProof,
+		"companyjob.$.payment.created_at": dt.Format("01/02/2006 15:04:05"),
+	}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	var updatedCompanyJob models.CompanyJobEntity
+	if err := pr.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": companyId, "companyjob.id": jobId}).Decode(&updatedCompanyJob); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	return fiber.StatusOK, nil
+}
