@@ -342,12 +342,12 @@ func (pr CompanyRepository) UpdateJobPayment(ctx context.Context, req models.Com
 	}
 
 	if _, err = pr.mongoDB.Collection("companydata").UpdateOne(ctx, bson.M{"id": companyId, "companyjob.id": jobId}, bson.M{"$set": bson.M{
-		"companyjob.$.payment.status":     req.Status,
-		"companyjob.$.payment.packet":     req.Packet,
-		"companyjob.$.payment.price":      price,
-		"companyjob.$.payment.until":      until,
-		"companyjob.$.payment.fileproof":  req.FileProof,
-		"companyjob.$.payment.created_at": dt.Format("01/02/2006 15:04:05"),
+		"companyjob.$.payment.status":    req.Status,
+		"companyjob.$.payment.packet":    req.Packet,
+		"companyjob.$.payment.price":     price,
+		"companyjob.$.payment.until":     until.Format("01/02/2006 15:04:05"),
+		"companyjob.$.payment.fileproof": req.FileProof,
+		"companyjob.$.payment.createdat": dt.Format("01/02/2006 15:04:05"),
 	}}); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
