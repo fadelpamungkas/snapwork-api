@@ -149,12 +149,18 @@ func (pr PersonRepository) UpdateDocumentPerson(ctx context.Context, req models.
 	reqId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
 
 	if _, err = pr.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
-		"document.avatar":      req.Avatar,
-		"document.ktp":         req.KTP,
-		"document.ijazah":      req.Ijazah,
-		"document.skck":        req.SKCK,
-		"document.cv":          req.CV,
-		"document.certificate": req.Certificate,
+		"document.avatar":          req.Avatar,
+		"document.avatarname":      req.AvatarName,
+		"document.ktp":             req.KTP,
+		"document.ktpname":         req.KTPName,
+		"document.ijazah":          req.Ijazah,
+		"document.ijazahname":      req.IjazahName,
+		"document.skck":            req.SKCK,
+		"document.skckname":        req.SKCKName,
+		"document.cv":              req.CV,
+		"document.cvname":          req.CVName,
+		"document.certificate":     req.Certificate,
+		"document.certificatename": req.CertificateName,
 	}}); err != nil {
 		return fiber.StatusInternalServerError, err
 	}

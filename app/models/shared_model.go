@@ -11,13 +11,19 @@ type (
 		Url  string             `json:"url,omitempty"`
 	}
 	Document struct {
-		Id          primitive.ObjectID `json:"_id,omitempty"`
-		Avatar      Image              `json:"avatar,omitempty"`
-		KTP         Image              `json:"ktp,omitempty"`
-		Ijazah      Image              `json:"ijazah,omitempty"`
-		SKCK        Image              `json:"skck,omitempty"`
-		CV          Image              `json:"cv,omitempty"`
-		Certificate Image              `json:"certificate,omitempty"`
+		Id              primitive.ObjectID `json:"_id,omitempty"`
+		Avatar          Image              `json:"avatar,omitempty"`
+		AvatarName      string             `json:"avatarname,omitempty"`
+		KTP             Image              `json:"ktp,omitempty"`
+		KTPName         string             `json:"ktpname,omitempty"`
+		Ijazah          Image              `json:"ijazah,omitempty"`
+		IjazahName      string             `json:"ijazahname,omitempty"`
+		SKCK            Image              `json:"skck,omitempty"`
+		SKCKName        string             `json:"skckname,omitempty"`
+		CV              Image              `json:"cv,omitempty"`
+		CVName          string             `json:"cvname,omitempty"`
+		Certificate     Image              `json:"certificate,omitempty"`
+		CertificateName string             `json:"certificatename,omitempty"`
 	}
 	Portfolio struct {
 		Id          primitive.ObjectID `json:"_id,omitempty"`
