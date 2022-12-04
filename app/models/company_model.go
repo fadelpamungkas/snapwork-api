@@ -62,21 +62,22 @@ type (
 		Data    *fiber.Map `json:"data"`
 	}
 	CompanyJobEntity struct {
-		Id          primitive.ObjectID `json:"_id,omitempty"`
-		Name        string             `json:"name,omitempty"`
-		Kind        string             `json:"kind,omitempty"`
-		Type        string             `json:"type,omitempty"`
-		Status      string             `json:"status,omitempty"`
-		Description string             `json:"description,omitempty"`
-		SoftSkill   string             `json:"softskill,omitempty"`
-		HardSkill   string             `json:"hardskill,omitempty"`
-		Education   string             `json:"education,omitempty"`
-		Major       string             `json:"major,omitempty"`
-		SpecificReq string             `json:"specificreq,omitempty"`
-		Placement   string             `json:"placement,omitempty"`
-		Available   string             `json:"available,omitempty"`
-		CreatedAt   string             `json:"created_at,omitempty"`
-		UpdatedAt   string             `json:"updated_at,omitempty"`
+		Id          primitive.ObjectID      `json:"_id,omitempty"`
+		Name        string                  `json:"name,omitempty"`
+		Kind        string                  `json:"kind,omitempty"`
+		Type        string                  `json:"type,omitempty"`
+		Status      string                  `json:"status,omitempty"`
+		Description string                  `json:"description,omitempty"`
+		SoftSkill   string                  `json:"softskill,omitempty"`
+		HardSkill   string                  `json:"hardskill,omitempty"`
+		Education   string                  `json:"education,omitempty"`
+		Major       string                  `json:"major,omitempty"`
+		SpecificReq string                  `json:"specificreq,omitempty"`
+		Placement   string                  `json:"placement,omitempty"`
+		Available   string                  `json:"available,omitempty"`
+		Payment     CompanyJobPaymentEntity `json:"payment,omitempty"`
+		CreatedAt   string                  `json:"created_at,omitempty"`
+		UpdatedAt   string                  `json:"updated_at,omitempty"`
 	}
 	CompanyJobRequest struct {
 		Id          primitive.ObjectID `json:"_id,omitempty"`
