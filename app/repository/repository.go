@@ -57,6 +57,9 @@ type (
 		GetPerson(ctx context.Context, id string) (res models.PersonResponse, err error)
 		UpdatePerson(ctx context.Context, req models.PersonRequest) (res int, err error)
 		InsertNotification(ctx context.Context, req models.Notification) (res int, err error)
+		UpdateDocumentPerson(ctx context.Context, req models.PersonDocumentRequest) (res int, err error)
+		UpdatePortfolioPerson(ctx context.Context, req models.Portfolio) (res int, err error)
+		UpdateSelfDevelopmentPerson(ctx context.Context, req models.SelfDevelopment) (res int, err error)
 	}
 
 	AssessmentRepositoryI interface {

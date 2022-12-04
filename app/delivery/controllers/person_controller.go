@@ -118,3 +118,96 @@ func (uc *PersonController) InsertNotification(c *fiber.Ctx) error {
 
 	return c.Status(data).JSON(data)
 }
+
+func (uc *PersonController) UpdateDocumentPerson(c *fiber.Ctx) error {
+	var validate = validator.New()
+	var req models.PersonDocumentRequest
+	//validate the request body
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+	//use validator library to validate required fields
+	if validationErr := validate.Struct(&req); validationErr != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": validationErr.Error(),
+			},
+		})
+	}
+	data, err := uc.usecase.UpdateDocumentPersonUC(context.Background(), req)
+	if err != nil {
+		return err
+	}
+
+	return c.Status(data).JSON(data)
+}
+
+func (uc *PersonController) UpdatePortfolioPerson(c *fiber.Ctx) error {
+	var validate = validator.New()
+	var req models.Portfolio
+	//validate the request body
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+	//use validator library to validate required fields
+	if validationErr := validate.Struct(&req); validationErr != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": validationErr.Error(),
+			},
+		})
+	}
+	data, err := uc.usecase.UpdatePortfolioPersonUC(context.Background(), req)
+	if err != nil {
+		return err
+	}
+
+	return c.Status(data).JSON(data)
+}
+
+func (uc *PersonController) UpdateSelfDevelopmentPerson(c *fiber.Ctx) error {
+	var validate = validator.New()
+	var req models.SelfDevelopment
+	//validate the request body
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+	//use validator library to validate required fields
+	if validationErr := validate.Struct(&req); validationErr != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": validationErr.Error(),
+			},
+		})
+	}
+	data, err := uc.usecase.UpdateSelfDevelopmentPersonUC(context.Background(), req)
+	if err != nil {
+		return err
+	}
+
+	return c.Status(data).JSON(data)
+}

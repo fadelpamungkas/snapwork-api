@@ -73,3 +73,45 @@ func (uc *PersonUsecase) InsertNotificationUC(ctx context.Context, req models.No
 
 	return res, nil
 }
+
+func (uc *PersonUsecase) UpdateDocumentPersonUC(ctx context.Context, req models.PersonDocumentRequest) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//insert data
+	res, err = uc.repo.UpdateDocumentPerson(ctx, req)
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
+}
+
+func (uc *PersonUsecase) UpdatePortfolioPersonUC(ctx context.Context, req models.Portfolio) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//insert data
+	res, err = uc.repo.UpdatePortfolioPerson(ctx, req)
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
+}
+
+func (uc *PersonUsecase) UpdateSelfDevelopmentPersonUC(ctx context.Context, req models.SelfDevelopment) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//insert data
+	res, err = uc.repo.UpdateSelfDevelopmentPerson(ctx, req)
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
+}

@@ -82,21 +82,12 @@ func (pr PersonRepository) UpdatePerson(ctx context.Context, req models.PersonRe
 		"province":           req.Province,
 		"state":              req.State,
 		"about":              req.About,
-		"portfolio":          req.Portfolio,
-		"avatar":             req.Avatar,
-		"ktp":                req.KTP,
-		"ijazah":             req.Ijazah,
-		"skck":               req.SKCK,
-		"cv":                 req.CV,
-		"certificate":        req.Certificate,
-		"selfdevelopment":    req.SelfDevelopment,
 		"education.s1":       req.Education.S1,
 		"education.s1major":  req.Education.S1Major,
 		"education.s1date":   req.Education.S1Date,
 		"education.sma":      req.Education.SMA,
 		"education.smamajor": req.Education.SMAMajor,
 		"education.smadate":  req.Education.SMADate,
-		"career":             req.Career,
 		"updated_at":         dt.Format("01/02/2006"),
 	}}); err != nil {
 		return fiber.StatusInternalServerError, err
@@ -149,6 +140,70 @@ func (ur PersonRepository) InsertNotification(ctx context.Context, req models.No
 	}
 
 	log.Println(updatedNotification)
+
+	return fiber.StatusOK, nil
+}
+
+func (pr PersonRepository) UpdateDocumentPerson(ctx context.Context, req models.PersonDocumentRequest) (res int, err error) {
+
+	reqId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
+
+	if _, err = pr.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
+		"document.avatar":      req.Avatar,
+		"document.ktp":         req.KTP,
+		"document.ijazah":      req.Ijazah,
+		"document.skck":        req.SKCK,
+		"document.cv":          req.CV,
+		"document.certificate": req.Certificate,
+	}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	//get updated post details
+	var updatedPerson models.PersonEntity
+	if err := pr.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedPerson); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	return fiber.StatusOK, nil
+}
+
+func (pr PersonRepository) UpdatePortfolioPerson(ctx context.Context, req models.Portfolio) (res int, err error) {
+	reqId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
+
+	if _, err = pr.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
+		"portfolio.link":        req.Link,
+		"portfolio.description": req.Description,
+	}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	//get updated post details
+	var updatedPerson models.PersonEntity
+	if err := pr.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedPerson); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	return fiber.StatusOK, nil
+}
+
+func (pr PersonRepository) UpdateSelfDevelopmentPerson(ctx context.Context, req models.SelfDevelopment) (res int, err error) {
+
+	reqId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
+
+	if _, err = pr.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
+		"selfdevelopment.score":  req.Score,
+		"selfdevelopment.status": req.Status,
+		"selfdevelopment.file":   req.File,
+	}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	//get updated post details
+	var updatedPerson models.PersonEntity
+	if err := pr.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedPerson); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
 
 	return fiber.StatusOK, nil
 }

@@ -19,6 +19,11 @@ type (
 		CV          Image              `json:"cv,omitempty"`
 		Certificate Image              `json:"certificate,omitempty"`
 	}
+	Portfolio struct {
+		Id          primitive.ObjectID `json:"_id,omitempty"`
+		Link        string             `json:"link,omitempty"`
+		Description string             `json:"description,omitempty"`
+	}
 	Education struct {
 		Id       primitive.ObjectID `json:"_id,omitempty"`
 		S1       string             `json:"s1,omitempty"`
@@ -33,15 +38,6 @@ type (
 		Score  string             `json:"score,omitempty"`
 		Status string             `json:"status,omitempty"`
 		File   string             `json:"file,omitempty"`
-	}
-	Career struct {
-		Id            primitive.ObjectID `json:"_id,omitempty"`
-		ApplicationId primitive.ObjectID `json:"applicationId,omitempty"`
-		Status        string             `json:"name,omitempty"`
-		CompanyName   string             `json:"concentration,omitempty"`
-		Date          string             `json:"date,omitempty"`
-		Position      string             `json:"position,omitempty"`
-		Type          string             `json:"type,omitempty"`
 	}
 	Notification struct {
 		Id          primitive.ObjectID `json:"_id,omitempty"`
