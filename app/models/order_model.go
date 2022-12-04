@@ -11,17 +11,14 @@ type (
 		UserId    primitive.ObjectID `json:"userid,omitempty"`
 		Status    string             `json:"status,omitempty"`
 		Name      string             `json:"name,omitempty"`
-		Method    string             `json:"method,omitempty"`
 		Amount    string             `json:"amount,omitempty"`
 		FileProof string             `json:"fileproof,omitempty"`
 		CreatedAt string             `json:"created_at,omitempty"`
 	}
 	OrderRequest struct {
-		Id        primitive.ObjectID `json:"_id,omitempty"`
 		UserId    primitive.ObjectID `json:"userid,omitempty"`
 		Status    string             `json:"status,omitempty"`
 		Name      string             `json:"name,omitempty"`
-		Method    string             `json:"method,omitempty"`
 		Amount    string             `json:"amount,omitempty"`
 		FileProof string             `json:"fileproof,omitempty"`
 		CreatedAt string             `json:"created_at,omitempty"`

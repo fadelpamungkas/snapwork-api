@@ -29,7 +29,6 @@ func (ur TransactionRepository) InsertOrder(ctx context.Context, req models.Orde
 		UserId:    req.UserId,
 		Status:    "Pending",
 		Name:      req.Name,
-		Method:    req.Method,
 		Amount:    req.Amount,
 		FileProof: req.FileProof,
 		CreatedAt: dt.Format("01/02/2006 15:04:05"),

@@ -96,6 +96,19 @@ type (
 		CreatedAt   string             `json:"created_at,omitempty"`
 		UpdatedAt   string             `json:"updated_at,omitempty"`
 	}
+	CompanyJobPaymentEntity struct {
+		Status    string `json:"status,omitempty"`
+		Packet    int    `json:"packet,omitempty"`
+		FileProof string `json:"fileproof,omitempty"`
+		CreatedAt string `json:"created_at,omitempty"`
+	}
+	CompanyJobPaymentRequest struct {
+		CompanyId    primitive.ObjectID `json:"companyid,omitempty"`
+		CompanyJobId primitive.ObjectID `json:"companyjobid,omitempty"`
+		Status       string             `json:"status,omitempty"`
+		Packet       int                `json:"packet,omitempty"`
+		FileProof    string             `json:"fileproof,omitempty"`
+	}
 	CompanyJobResponse struct {
 		Status  int        `json:"status"`
 		Message string     `json:"message"`

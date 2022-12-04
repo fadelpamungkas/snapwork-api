@@ -123,21 +123,26 @@ func (ur CompanyRepository) GetAllCompanies(ctx context.Context) (res models.Com
 	}, err
 }
 
-func (ur CompanyRepository) InsertJob(ctx context.Context, req models.CompanyJobRequest) (res int, err error) {
+func (ur CompanyRepository) InsertJob(ctx context.Context, req models.CompanyJobRequest) (res models.CompanyJobResponse, err error) {
 	dt := time.Now()
 
 	reqId, _ := primitive.ObjectIDFromHex(req.CompanyId.Hex())
+	JobId := primitive.NewObjectID()
 
 	jobs := []models.CompanyJobEntity{}
 
 	//get updated post details
 	var currentData models.CompanyEntity
 	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": reqId}).Decode(&currentData); err != nil {
-		return fiber.StatusInternalServerError, err
+		return models.CompanyJobResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error find company job",
+			Data:    nil,
+		}, err
 	}
 
 	newJob := models.CompanyJobEntity{
-		Id:          primitive.NewObjectID(),
+		Id:          JobId,
 		Name:        req.Name,
 		Kind:        req.Kind,
 		Type:        req.Type,
@@ -159,18 +164,32 @@ func (ur CompanyRepository) InsertJob(ctx context.Context, req models.CompanyJob
 	if _, err = ur.mongoDB.Collection("companydata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
 		"companyjob": jobs,
 	}}); err != nil {
-		return fiber.StatusInternalServerError, err
+		return models.CompanyJobResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error insert job",
+			Data:    nil,
+		}, err
 	}
 
 	//get updated post details
 	var updatedCompanyJob models.CompanyEntity
 	if err := ur.mongoDB.Collection("companydata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedCompanyJob); err != nil {
-		return fiber.StatusInternalServerError, err
+		return models.CompanyJobResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error insert job",
+			Data:    nil,
+		}, err
 	}
 
 	log.Println(updatedCompanyJob)
 
-	return fiber.StatusOK, nil
+	return models.CompanyJobResponse{
+		Status:  fiber.StatusOK,
+		Message: "Success insert job",
+		Data: &fiber.Map{
+			"data": JobId,
+		},
+	}, err
 }
 
 func (ur CompanyRepository) GetCompany(ctx context.Context, id string) (res models.CompanyResponse, err error) {

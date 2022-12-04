@@ -60,7 +60,7 @@ func (uc *CompanyUsecase) GetAllCompaniesUC(ctx context.Context) (res models.Com
 	return list, err
 }
 
-func (uc *CompanyUsecase) InsertJobUC(ctx context.Context, req models.CompanyJobRequest) (res int, err error) {
+func (uc *CompanyUsecase) InsertJobUC(ctx context.Context, req models.CompanyJobRequest) (res models.CompanyJobResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}

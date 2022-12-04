@@ -101,7 +101,7 @@ func (uc *CompanyController) InsertJob(c *fiber.Ctx) error {
 	var req models.CompanyJobRequest
 	//validate the request body
 	if err := c.BodyParser(&req); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.CompanyResponse{
+		return c.Status(fiber.StatusBadRequest).JSON(models.CompanyJobResponse{
 			Status:  fiber.StatusBadRequest,
 			Message: "Invalid request body",
 			Data: &fiber.Map{
@@ -124,7 +124,7 @@ func (uc *CompanyController) InsertJob(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Status(data).JSON(data)
+	return c.Status(data.Status).JSON(data)
 }
 
 func (uc *CompanyController) GetCompany(c *fiber.Ctx) error {
