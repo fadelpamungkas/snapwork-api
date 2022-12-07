@@ -31,13 +31,15 @@ type (
 		Description string             `json:"description,omitempty"`
 	}
 	Education struct {
-		Id       primitive.ObjectID `json:"_id,omitempty"`
-		S1       string             `json:"s1,omitempty"`
-		S1Major  string             `json:"s1major,omitempty"`
-		S1Date   string             `json:"s1date,omitempty"`
-		SMA      string             `json:"sma,omitempty"`
-		SMAMajor string             `json:"smamajor,omitempty"`
-		SMADate  string             `json:"smadate,omitempty"`
+		Id         primitive.ObjectID `json:"_id,omitempty"`
+		S1         string             `json:"s1,omitempty"`
+		S1Major    string             `json:"s1major,omitempty"`
+		S1DateIn   string             `json:"s1datein,omitempty"`
+		S1DateOut  string             `json:"s1dateout,omitempty"`
+		SMA        string             `json:"sma,omitempty"`
+		SMAMajor   string             `json:"smamajor,omitempty"`
+		SMADateIn  string             `json:"smadatein,omitempty"`
+		SMADateOut string             `json:"smadateout,omitempty"`
 	}
 	SelfDevelopment struct {
 		Id     primitive.ObjectID `json:"_id,omitempty"`
