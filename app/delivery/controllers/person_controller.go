@@ -211,3 +211,23 @@ func (uc *PersonController) UpdateSelfDevelopmentPerson(c *fiber.Ctx) error {
 
 	return c.Status(data).JSON(data)
 }
+
+func (nc *PersonController) UpdateSelfDevelopmentPaymentPerson(c *fiber.Ctx) error {
+	var req models.SelfDevelopmentPaymentRequest
+	//validate the request body
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.PersonResponse{
+			Status:  fiber.StatusBadRequest,
+			Message: "Invalid request body",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+	data, err := nc.usecase.UpdateSelfDevelopmentPaymentPersonUC(context.Background(), req)
+	if err != nil {
+		return err
+	}
+
+	return c.Status(data).JSON(data)
+}

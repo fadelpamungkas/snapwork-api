@@ -61,6 +61,7 @@ type (
 		UpdateDocumentPersonUC(ctx context.Context, req models.PersonDocumentRequest) (res int, err error)
 		UpdatePortfolioPersonUC(ctx context.Context, req models.Portfolio) (res int, err error)
 		UpdateSelfDevelopmentPersonUC(ctx context.Context, req models.SelfDevelopment) (res int, err error)
+		UpdateSelfDevelopmentPaymentPersonUC(ctx context.Context, req models.SelfDevelopmentPaymentRequest) (res int, err error)
 	}
 
 	AssessmentUsecaseI interface {

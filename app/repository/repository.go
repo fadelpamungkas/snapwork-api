@@ -61,6 +61,7 @@ type (
 		UpdateDocumentPerson(ctx context.Context, req models.PersonDocumentRequest) (res int, err error)
 		UpdatePortfolioPerson(ctx context.Context, req models.Portfolio) (res int, err error)
 		UpdateSelfDevelopmentPerson(ctx context.Context, req models.SelfDevelopment) (res int, err error)
+		UpdateSelfDevelopmentPaymentPerson(ctx context.Context, req models.SelfDevelopmentPaymentRequest) (res int, err error)
 	}
 
 	AssessmentRepositoryI interface {

@@ -200,14 +200,36 @@ func (pr PersonRepository) UpdateSelfDevelopmentPerson(ctx context.Context, req 
 	reqId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
 
 	if _, err = pr.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
-		"selfdevelopment.score":  req.Score,
-		"selfdevelopment.status": req.Status,
-		"selfdevelopment.file":   req.File,
+		"selfdevelopment.score": req.Score,
+		"selfdevelopment.file":  req.File,
 	}}); err != nil {
 		return fiber.StatusInternalServerError, err
 	}
 
 	//get updated post details
+	var updatedPerson models.PersonEntity
+	if err := pr.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedPerson); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
+	return fiber.StatusOK, nil
+}
+
+func (pr PersonRepository) UpdateSelfDevelopmentPaymentPerson(ctx context.Context, req models.SelfDevelopmentPaymentRequest) (res int, err error) {
+
+	dt := time.Now()
+
+	reqId, _ := primitive.ObjectIDFromHex(req.Id.Hex())
+
+	if _, err = pr.mongoDB.Collection("persondata").UpdateOne(ctx, bson.M{"id": reqId}, bson.M{"$set": bson.M{
+		"selfdevelopment.payment.status":    req.Status,
+		"selfdevelopment.payment.price":     req.Price,
+		"selfdevelopment.payment.fileproof": req.FileProof,
+		"selfdevelopment.payment.createdat": dt.Format("01/02/2006 15:04:05"),
+	}}); err != nil {
+		return fiber.StatusInternalServerError, err
+	}
+
 	var updatedPerson models.PersonEntity
 	if err := pr.mongoDB.Collection("persondata").FindOne(ctx, bson.M{"id": reqId}).Decode(&updatedPerson); err != nil {
 		return fiber.StatusInternalServerError, err

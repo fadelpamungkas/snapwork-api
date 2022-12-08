@@ -115,3 +115,16 @@ func (uc *PersonUsecase) UpdateSelfDevelopmentPersonUC(ctx context.Context, req 
 
 	return res, nil
 }
+
+func (uc *PersonUsecase) UpdateSelfDevelopmentPaymentPersonUC(ctx context.Context, req models.SelfDevelopmentPaymentRequest) (res int, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//update data
+	res, err = uc.repo.UpdateSelfDevelopmentPaymentPerson(ctx, req)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
+}
