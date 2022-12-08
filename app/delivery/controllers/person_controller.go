@@ -52,6 +52,23 @@ func (nc *PersonController) InsertPerson(c *fiber.Ctx) error {
 	return c.Status(data).JSON(data)
 }
 
+func (uc *PersonController) GetAllPerson(c *fiber.Ctx) error {
+
+	data, err := uc.usecase.GetAllPersonUC(context.Background())
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(models.PersonResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error getting all person",
+			Data: &fiber.Map{
+				"data": err.Error(),
+			},
+		})
+	}
+
+	// authUser := c.Locals("authUser")
+	return c.Status(data.Status).JSON(data)
+}
+
 func (pc *PersonController) GetPerson(c *fiber.Ctx) error {
 	newsId := c.Params("personId")
 	data, err := pc.usecase.GetPersonUC(context.Background(), newsId)

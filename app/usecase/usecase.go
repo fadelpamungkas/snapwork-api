@@ -55,6 +55,7 @@ type (
 
 	PersonUsecaseI interface {
 		InsertPersonUC(ctx context.Context, req models.PersonRequest) (res int, err error)
+		GetAllPersonUC(ctx context.Context) (res models.PersonResponse, err error)
 		GetPersonUC(ctx context.Context, id string) (res models.PersonResponse, err error)
 		UpdatePersonUC(ctx context.Context, req models.PersonRequest) (res int, err error)
 		InsertNotificationUC(ctx context.Context, req models.Notification) (res int, err error)

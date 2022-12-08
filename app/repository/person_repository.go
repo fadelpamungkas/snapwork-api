@@ -40,6 +40,41 @@ func (ur PersonRepository) InsertPerson(ctx context.Context, req models.PersonRe
 	return fiber.StatusOK, nil
 }
 
+func (ur PersonRepository) GetAllPerson(ctx context.Context) (res models.PersonResponse, err error) {
+
+	results, err := ur.mongoDB.Collection("persondata").Find(ctx, bson.M{})
+	if err != nil {
+		return models.PersonResponse{
+			Status:  fiber.StatusInternalServerError,
+			Message: "Error getting person",
+			Data:    nil,
+		}, err
+	}
+	defer results.Close(ctx)
+
+	var persons []models.PersonEntity
+	for results.Next(ctx) {
+		var row models.PersonEntity
+		err := results.Decode(&row)
+		if err != nil {
+			return models.PersonResponse{
+				Status:  fiber.StatusInternalServerError,
+				Message: "Error getting companies",
+				Data:    nil,
+			}, err
+		}
+		persons = append(persons, row)
+	}
+
+	return models.PersonResponse{
+		Status:  fiber.StatusOK,
+		Message: "Success get companies",
+		Data: &fiber.Map{
+			"data": persons,
+		},
+	}, err
+}
+
 func (ur PersonRepository) GetPerson(ctx context.Context, id string) (res models.PersonResponse, err error) {
 	var person models.PersonEntity
 

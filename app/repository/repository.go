@@ -55,6 +55,7 @@ type (
 
 	PersonRepositoryI interface {
 		InsertPerson(ctx context.Context, req models.PersonRequest) (res int, err error)
+		GetAllPerson(ctx context.Context) (res models.PersonResponse, err error)
 		GetPerson(ctx context.Context, id string) (res models.PersonResponse, err error)
 		UpdatePerson(ctx context.Context, req models.PersonRequest) (res int, err error)
 		InsertNotification(ctx context.Context, req models.Notification) (res int, err error)

@@ -32,6 +32,21 @@ func (uc *PersonUsecase) InsertPersonUC(ctx context.Context, req models.PersonRe
 	return res, nil
 }
 
+func (uc *PersonUsecase) GetAllPersonUC(ctx context.Context) (res models.PersonResponse, err error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	//get all data
+	list, err := uc.repo.GetAllPerson(ctx)
+	if err != nil {
+		log.Println("failed to show data product with default log")
+		return list, err
+	}
+
+	return list, err
+}
+
 func (uc *PersonUsecase) GetPersonUC(ctx context.Context, id string) (res models.PersonResponse, err error) {
 	if ctx == nil {
 		ctx = context.Background()
